@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+@config "../../tailwind.config.js";
+
+@theme {
+  --font-sans: 'Montserrat', ui-sans-serif, system-ui;
+  --color-primary: #3d2a1f;
+  --color-primary-dark: #2f1f17;
+  --color-surface: #f6f0eb;
+  --color-ink: #19181a;
+  --color-muted: #57534e;
+  --color-border: #e3dcd5;
+  --color-background: #fcfaf8;
+  --radius-card: 2rem;
+  --radius-input: 1.5rem;
+  --shadow-card: 0 35px 80px rgba(15,23,42,0.1);
+  --shadow-btn: 0 16px 30px rgba(33,20,11,0.22);
+}
+
+#koteshop-toast-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9999999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1rem !important;
+  box-sizing: border-box !important;
+  background-color: rgba(33, 20, 11, 0.45) !important;
+  backdrop-filter: blur(5px) !important;
+  -webkit-backdrop-filter: blur(5px) !important;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease-out !important;
+}
+
+#koteshop-toast-overlay.active {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.koteshop-dialog-card {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 380px !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+  background-color: #ffffff !important;
+  border-radius: 2rem !important;
+  border: 1px solid #edd8cf !important;
+  box-shadow: 0 25px 70px rgba(33, 20, 11, 0.3) !important;
+  padding: 2rem 1.75rem 1.75rem 1.75rem !important;
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  transform: scale(0.9) translateY(12px) !important;
+  opacity: 0 !important;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease-out !important;
+}
+
+#koteshop-toast-overlay.active .koteshop-dialog-card {
+  transform: scale(1) translateY(0) !important;
+  opacity: 1 !important;
+}
+
+.koteshop-dialog-card.closing {
+  transform: scale(0.9) translateY(12px) !important;
+  opacity: 0 !important;
+}
+
