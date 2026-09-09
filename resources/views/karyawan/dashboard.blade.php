@@ -201,16 +201,22 @@
                             </td>
                             {{-- Aksi Button --}}
                             <td class="py-4 px-4">
-                                @php
-                                    $aksiClasses = match($pesanan['aksiColor']) {
-                                        'medium' => 'bg-[#8c6239] hover:bg-[#6f4e2c] text-white',
-                                        'dark' => 'bg-[#21140b] hover:bg-[#3d2a1f] text-white',
-                                        default => 'bg-[#21140b] hover:bg-[#3d2a1f] text-white',
-                                    };
-                                @endphp
-                                <a href="{{ $pesanan['aksiLink'] ?? route('karyawan.pesanan') }}" class="rounded-xl px-4 py-2 text-[11px] font-bold transition-all active:scale-95 cursor-pointer {{ $aksiClasses }} inline-block text-center shadow-sm">
-                                    {{ $pesanan['aksi'] }}
-                                </a>
+                                @if($pesanan['isActionable'] ?? true)
+                                    @php
+                                        $aksiClasses = match($pesanan['aksiColor'] ?? 'dark') {
+                                            'medium' => 'bg-[#8c6239] hover:bg-[#6f4e2c] text-white',
+                                            'dark' => 'bg-[#21140b] hover:bg-[#3d2a1f] text-white',
+                                            default => 'bg-[#21140b] hover:bg-[#3d2a1f] text-white',
+                                        };
+                                    @endphp
+                                    <a href="{{ $pesanan['aksiLink'] ?? route('karyawan.pesanan') }}" class="rounded-xl px-4 py-2 text-[11px] font-bold transition-all active:scale-95 cursor-pointer {{ $aksiClasses }} inline-block text-center shadow-sm">
+                                        {{ $pesanan['aksi'] }}
+                                    </a>
+                                @else
+                                    <span class="inline-flex items-center justify-center rounded-xl px-4 py-2 text-[11px] font-bold bg-[#faf7f5] text-[#a89584] border border-[#ede6df] cursor-not-allowed select-none opacity-80">
+                                        {{ $pesanan['aksi'] ?? '-' }}
+                                    </span>
+                                @endif
                             </td>
                         </tr>
                         @empty

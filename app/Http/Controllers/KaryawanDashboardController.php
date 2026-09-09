@@ -100,9 +100,11 @@ class KaryawanDashboardController extends Controller
             $menuNames = $order->detailPesanan->map(fn ($d) => $d->jumlah.'x '.($d->menu?->nama_menu ?? 'Menu'))->join(', ');
 
             $isWaitingPayment = ($order->pembayaran && $order->pembayaran->status === 'menunggu');
+            $isCompleted = ($order->status_pesanan === 'selesai');
+            $isCancelled = ($order->status_pesanan === 'dibatalkan');
 
             $statusColor = match (true) {
-                $order->status_pesanan === 'dibatalkan' => 'red',
+                $isCancelled => 'red',
                 $isWaitingPayment => 'yellow',
                 $order->status_pesanan === 'diproses' => 'yellow',
                 $order->status_pesanan === 'sedang_dibuat' => 'brown',
@@ -111,25 +113,29 @@ class KaryawanDashboardController extends Controller
             };
 
             $statusText = match (true) {
-                $order->status_pesanan === 'dibatalkan' => 'Dibatalkan',
+                $isCancelled => 'Dibatalkan',
                 $isWaitingPayment => 'Menunggu Verifikasi',
                 $order->status_pesanan === 'diproses' => 'Diproses',
                 $order->status_pesanan === 'sedang_dibuat' => 'Sedang Dibuat',
                 $order->status_pesanan === 'siap_diambil' => 'Siap Diambil',
-                $order->status_pesanan === 'selesai' => 'Selesai',
+                $isCompleted => 'Selesai',
                 default => ucfirst($order->status_pesanan),
             };
 
+            $isActionable = ! $isCompleted && ! $isCancelled;
+
             $aksiText = match (true) {
-                $order->status_pesanan === 'dibatalkan' => 'Lihat',
+                $isCancelled => '-',
+                $isCompleted => 'Selesai',
                 $isWaitingPayment => 'Verifikasi',
                 $order->status_pesanan === 'diproses' => 'Mulai Buat',
                 $order->status_pesanan === 'sedang_dibuat' => 'Siap Diambil',
                 $order->status_pesanan === 'siap_diambil' => 'Selesaikan',
-                default => 'Lihat',
+                default => '-',
             };
 
             $aksiColor = match (true) {
+                $isCompleted || $isCancelled => 'disabled',
                 $order->status_pesanan === 'sedang_dibuat' => 'medium',
                 default => 'dark',
             };
@@ -147,6 +153,7 @@ class KaryawanDashboardController extends Controller
                 'aksiColor' => $aksiColor,
                 'aksi' => $aksiText,
                 'aksiLink' => $aksiLink,
+                'isActionable' => $isActionable,
             ];
         }
 

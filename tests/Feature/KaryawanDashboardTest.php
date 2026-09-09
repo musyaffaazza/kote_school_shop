@@ -265,3 +265,21 @@ test('unapproved user orders do not enter daftar pesanan until payment is verifi
     $responseAfter->assertSee('Budi Santoso');
 });
 
+test('completed orders on karyawan dashboard are not clickable', function () {
+    $karyawan = User::factory()->create(['role' => 'karyawan']);
+    $pelanggan = User::factory()->create(['role' => 'pelanggan', 'nama' => 'Siti Nur']);
+
+    $pesananSelesai = Pesanan::create([
+        'id_user' => $pelanggan->id_user,
+        'tanggal_pesan' => now(),
+        'total_harga' => 30000,
+        'metode_pembayaran' => 'Cash',
+        'status_pesanan' => 'selesai',
+    ]);
+
+    $response = $this->actingAs($karyawan)->get(route('karyawan.dashboard'));
+    $response->assertStatus(200);
+    $response->assertSee($pesananSelesai->order_number);
+    $response->assertSee('cursor-not-allowed');
+});
+
