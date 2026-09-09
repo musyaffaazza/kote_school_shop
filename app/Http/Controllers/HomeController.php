@@ -153,6 +153,22 @@ class HomeController extends Controller
     }
 
     /**
+     * Tampilkan halaman Syarat & Ketentuan
+     */
+    public function terms(): View
+    {
+        return view('terms');
+    }
+
+    /**
+     * Tampilkan halaman Kebijakan Privasi
+     */
+    public function privacy(): View
+    {
+        return view('privacy');
+    }
+
+    /**
      * Tampilkan halaman Kontak (Hubungi Kami)
      */
     public function contact(): View

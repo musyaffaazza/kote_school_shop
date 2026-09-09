@@ -23,6 +23,8 @@ Route::get('/menu/{menu}', [HomeController::class, 'menuShow'])->name('menu.show
 Route::get('/promo', [HomeController::class, 'promo'])->name('promo');
 Route::post('/promo/check', [HomeController::class, 'checkPromo'])->name('promo.check');
 Route::get('/tentang-kami', [HomeController::class, 'about'])->name('about');
+Route::get('/syarat-ketentuan', [HomeController::class, 'terms'])->name('terms');
+Route::get('/kebijakan-privasi', [HomeController::class, 'privacy'])->name('privacy');
 Route::get('/kontak', [HomeController::class, 'contact'])->name('contact');
 Route::post('/kontak', [HomeController::class, 'submitContact'])->name('contact.submit');
 Route::get('/keranjang', [HomeController::class, 'cart'])->name('cart');

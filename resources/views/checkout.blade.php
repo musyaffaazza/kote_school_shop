@@ -265,7 +265,7 @@
                         </svg>
                     </button>
                     <p class="text-[11px] font-medium text-[#8f7664] text-center">
-                        Dengan membayar, Anda menyetujui <a href="#" class="underline hover:text-[#21140b] transition-colors">Syarat & Ketentuan</a> kami.
+                        Dengan membayar, Anda menyetujui <a href="{{ route('terms') }}" target="_blank" class="underline hover:text-[#21140b] transition-colors">Syarat &amp; Ketentuan</a> kami.
                     </p>
                 </div>
             </div>

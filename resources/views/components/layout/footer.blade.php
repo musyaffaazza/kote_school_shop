@@ -74,9 +74,16 @@
 
         </div>
 
-        <!-- Copyright -->
-        <div class="mt-12 border-t border-[#dfd6ce] pt-6 text-center text-xs sm:text-sm text-[#66574c]">
-            &copy; 2026 KOTE SCHOOL SHOP. Modern Artisanal Coffee Experience.
+        <!-- Copyright & Legal -->
+        <div class="mt-12 border-t border-[#dfd6ce] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left text-xs sm:text-sm text-[#66574c]">
+            <div>
+                &copy; 2026 KOTE SCHOOL SHOP. Modern Artisanal Coffee Experience.
+            </div>
+            <div class="flex items-center gap-3 text-xs">
+                <a href="{{ route('terms') }}" class="hover:text-[#21140b] underline transition-colors">Syarat &amp; Ketentuan</a>
+                <span>•</span>
+                <a href="{{ route('privacy') }}" class="hover:text-[#21140b] underline transition-colors">Kebijakan Privasi</a>
+            </div>
         </div>
     </div>
 </footer>

@@ -178,9 +178,9 @@
                                     class="mt-0.5 w-4 h-4 rounded border-[#d5c6b8] text-[#21140b] focus:ring-[#8f7664]/30 bg-[#fbf1e8] accent-[#21140b]" />
                                 <span class="text-xs text-[#5b4f45] leading-snug">
                                     Saya setuju dengan
-                                    <a href="#" class="font-semibold text-[#ab7a55] hover:text-[#21140b] underline">Syarat &amp; Ketentuan</a>
+                                    <a href="{{ route('terms') }}" target="_blank" class="font-semibold text-[#ab7a55] hover:text-[#21140b] underline">Syarat &amp; Ketentuan</a>
                                     serta
-                                    <a href="#" class="font-semibold text-[#ab7a55] hover:text-[#21140b] underline">Kebijakan Privasi</a>.
+                                    <a href="{{ route('privacy') }}" target="_blank" class="font-semibold text-[#ab7a55] hover:text-[#21140b] underline">Kebijakan Privasi</a>.
                                 </span>
                             </label>
                             @error('terms')
