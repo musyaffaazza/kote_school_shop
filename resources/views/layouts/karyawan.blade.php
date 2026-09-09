@@ -81,7 +81,7 @@
                     {{-- Page Title --}}
                     <div class="hidden lg:block">
                         <h2 class="text-xl font-extrabold text-[#21140b]">@yield('page-title', 'Dashboard Karyawan')</h2>
-                        <p class="text-xs text-[#8f7664] font-medium">{{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}</p>
+                        <p class="text-xs text-[#8f7664] font-medium">{{ (request('date') ? \Carbon\Carbon::parse(request('date')) : \Carbon\Carbon::now())->locale('id')->translatedFormat('l, d F Y') }}</p>
                     </div>
 
                     @yield('header-search')

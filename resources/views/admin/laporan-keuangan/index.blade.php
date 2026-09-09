@@ -188,25 +188,96 @@
     </div>
 
     {{-- 3. GRAFIK KEUANGAN (FULL WIDTH TOP CARD) --}}
-    <div class="rounded-2xl bg-white p-6 border border-[#ede6df]/80 shadow-xs">
-        <div class="mb-4">
-            <h3 class="text-base font-extrabold text-[#21140b]">Grafik Keuangan</h3>
+    <div class="rounded-2xl bg-white p-6 sm:p-7 border border-[#ede6df]/80 shadow-xs">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+            <div>
+                <div class="flex items-center gap-2.5 flex-wrap">
+                    <h3 class="text-base sm:text-lg font-extrabold text-[#21140b] tracking-tight">Grafik Keuangan</h3>
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-[#faf5f0] border border-[#e8ded5] px-2.5 py-0.5 text-[11px] font-bold text-[#8b5a2b]">
+                        <span class="h-1.5 w-1.5 rounded-full bg-[#8b5a2b]"></span>
+                        {{ $periodeLabel }}
+                    </span>
+                </div>
+                <p class="text-xs text-[#8f7664] mt-1 font-medium" id="chart-sub-label">
+                    Arus Kas Harian (Grafik turun ke 0 saat tidak ada aktivitas transaksi)
+                </p>
+            </div>
+
+            {{-- Controls: View Mode (Harian vs Akumulasi) & Type (Area vs Bar) --}}
+            <div class="flex flex-wrap items-center gap-2">
+                {{-- Mode Switcher: Harian vs Akumulasi --}}
+                <div class="flex items-center gap-1 bg-[#faf5f0] p-1 rounded-xl border border-[#ede6df] shadow-2xs">
+                    <button type="button" id="btn-chart-daily" class="px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all bg-[#21140b] text-white shadow-xs cursor-pointer">
+                        Harian
+                    </button>
+                    <button type="button" id="btn-chart-cumulative" class="px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all text-[#8f7664] hover:text-[#21140b] cursor-pointer">
+                        Akumulasi
+                    </button>
+                </div>
+
+                {{-- Chart Type Switcher: Area Line vs Bar --}}
+                <div class="flex items-center gap-1 bg-[#faf5f0] p-1 rounded-xl border border-[#ede6df] shadow-2xs">
+                    <button type="button" id="btn-chart-type-line" class="p-1.5 text-xs font-bold rounded-lg transition-all bg-white text-[#21140b] shadow-2xs cursor-pointer" title="Grafik Garis Area">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 3v18h18" />
+                        </svg>
+                    </button>
+                    <button type="button" id="btn-chart-type-bar" class="p-1.5 text-xs font-bold rounded-lg transition-all text-[#8f7664] hover:text-[#21140b] cursor-pointer" title="Grafik Batang">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
         </div>
 
-        {{-- Chart Canvas --}}
-        <div class="relative h-72 sm:h-80 w-full">
+        {{-- Quick Stats Bar right above the chart --}}
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5 p-3.5 rounded-xl bg-[#faf7f2]/80 border border-[#ede6df]/60">
+            <div class="flex items-center gap-2.5">
+                <span class="h-3 w-3 rounded-full bg-[#10b981] ring-4 ring-[#10b981]/20 shrink-0"></span>
+                <div>
+                    <p class="text-[10px] font-bold text-[#8f7664] uppercase tracking-wider">Total Pemasukan</p>
+                    <p class="text-sm font-extrabold text-[#21140b]">{{ $stats['totalPendapatan'] }}</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2.5">
+                <span class="h-3 w-3 rounded-full bg-[#ef4444] ring-4 ring-[#ef4444]/20 shrink-0"></span>
+                <div>
+                    <p class="text-[10px] font-bold text-[#8f7664] uppercase tracking-wider">Total Pengeluaran</p>
+                    <p class="text-sm font-extrabold text-[#dc2626]">{{ $stats['totalPengeluaran'] }}</p>
+                </div>
+            </div>
+            <div class="col-span-2 sm:col-span-1 flex items-center gap-2.5 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#ede6df]/50">
+                <span class="h-3 w-3 rounded-full bg-[#8b5a2b] ring-4 ring-[#8b5a2b]/20 shrink-0"></span>
+                <div>
+                    <p class="text-[10px] font-bold text-[#8f7664] uppercase tracking-wider">Laba Bersih Periode</p>
+                    <p class="text-sm font-extrabold {{ $stats['labaBersihRaw'] >= 0 ? 'text-emerald-700' : 'text-rose-600' }}">{{ $stats['labaBersih'] }}</p>
+                </div>
+            </div>
+        </div>
+
+        {{-- Chart Canvas Container --}}
+        <div class="relative h-72 sm:h-84 w-full">
             <canvas id="financeChart" class="w-full h-full"></canvas>
         </div>
 
-        {{-- Bottom Center Legend (Sesuai Mockup) --}}
-        <div class="flex items-center justify-center gap-6 mt-4 pt-3 border-t border-[#f7f3ee] text-xs font-semibold">
-            <div class="flex items-center gap-2">
-                <span class="h-2.5 w-2.5 rounded-full bg-[#10b981]"></span>
-                <span class="text-[#5a4d42]">Pemasukan</span>
+        {{-- Interactive Legend / Guide at bottom --}}
+        <div class="flex flex-wrap items-center justify-between gap-4 mt-4 pt-4 border-t border-[#f7f3ee] text-xs">
+            <div class="flex items-center gap-6 font-semibold">
+                <div class="flex items-center gap-2">
+                    <span class="h-2.5 w-2.5 rounded-full bg-[#10b981] ring-4 ring-[#10b981]/15"></span>
+                    <span class="text-[#5a4d42]">Pemasukan</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="h-2.5 w-2.5 rounded-full bg-[#ef4444] ring-4 ring-[#ef4444]/15"></span>
+                    <span class="text-[#5a4d42]">Pengeluaran</span>
+                </div>
             </div>
-            <div class="flex items-center gap-2">
-                <span class="h-2.5 w-2.5 rounded-full bg-[#dc2626]"></span>
-                <span class="text-[#5a4d42]">Pengeluaran</span>
+            <div class="flex items-center gap-1.5 text-[11px] text-[#8f7664] font-medium">
+                <svg class="h-3.5 w-3.5 text-[#a89584]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span id="chart-guide-text">Arahkan kursor pada grafik untuk melihat rincian tanggal & arus kas</span>
             </div>
         </div>
     </div>
@@ -790,94 +861,244 @@
         const ctx = canvas.getContext('2d');
         const chartData = @json($chartData);
 
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: chartData.labels,
-                datasets: [
+        function createGreenGradient(c) {
+            const gradient = c.createLinearGradient(0, 0, 0, 320);
+            gradient.addColorStop(0, 'rgba(16, 185, 129, 0.28)');
+            gradient.addColorStop(0.7, 'rgba(16, 185, 129, 0.04)');
+            gradient.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+            return gradient;
+        }
+
+        function createRedGradient(c) {
+            const gradient = c.createLinearGradient(0, 0, 0, 320);
+            gradient.addColorStop(0, 'rgba(239, 68, 68, 0.22)');
+            gradient.addColorStop(0.7, 'rgba(239, 68, 68, 0.04)');
+            gradient.addColorStop(1, 'rgba(239, 68, 68, 0.0)');
+            return gradient;
+        }
+
+        let currentMode = 'daily'; // 'daily' (default) or 'cumulative'
+        let currentType = 'line';  // 'line' (default) or 'bar'
+        let financeChartInstance = null;
+
+        function getDatasets(type, mode) {
+            const isDaily = mode === 'daily';
+            const pemasukanData = isDaily ? chartData.pemasukan_harian : chartData.pemasukan_akumulasi;
+            const pengeluaranData = isDaily ? chartData.pengeluaran_harian : chartData.pengeluaran_akumulasi;
+
+            if (type === 'bar') {
+                return [
                     {
                         label: 'Pemasukan',
-                        data: chartData.pemasukan,
-                        borderColor: '#10b981',
-                        borderWidth: 3,
-                        backgroundColor: 'transparent',
-                        fill: false,
-                        tension: 0.35,
-                        pointBackgroundColor: '#10b981',
-                        pointBorderColor: '#ffffff',
-                        pointBorderWidth: 2,
-                        pointRadius: 4.5,
-                        pointHoverRadius: 6.5
+                        data: pemasukanData,
+                        backgroundColor: '#10b981',
+                        hoverBackgroundColor: '#059669',
+                        borderRadius: 6,
+                        borderSkipped: false,
+                        barPercentage: 0.7,
+                        categoryPercentage: 0.7
                     },
                     {
                         label: 'Pengeluaran',
-                        data: chartData.pengeluaran,
-                        borderColor: '#dc2626',
-                        borderWidth: 3,
-                        backgroundColor: 'transparent',
-                        fill: false,
-                        tension: 0.35,
-                        pointBackgroundColor: '#dc2626',
-                        pointBorderColor: '#ffffff',
-                        pointBorderWidth: 2,
-                        pointRadius: 4.5,
-                        pointHoverRadius: 6.5
+                        data: pengeluaranData,
+                        backgroundColor: '#ef4444',
+                        hoverBackgroundColor: '#dc2626',
+                        borderRadius: 6,
+                        borderSkipped: false,
+                        barPercentage: 0.7,
+                        categoryPercentage: 0.7
                     }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: {
-                    intersect: false,
-                    mode: 'index',
+                ];
+            }
+
+            return [
+                {
+                    label: 'Pemasukan',
+                    data: pemasukanData,
+                    borderColor: '#10b981',
+                    borderWidth: 2.75,
+                    backgroundColor: createGreenGradient(ctx),
+                    fill: true,
+                    tension: 0.38,
+                    pointBackgroundColor: '#10b981',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 7,
+                    pointHoverBorderWidth: 2.5
                 },
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        backgroundColor: '#241812',
-                        titleFont: { size: 11, weight: 'bold' },
-                        bodyFont: { size: 12, weight: 'bold' },
-                        padding: 10,
-                        cornerRadius: 8,
-                        callbacks: {
-                            label: function(context) {
-                                return context.dataset.label + ': Rp ' + Number(context.raw).toLocaleString('id-ID');
+                {
+                    label: 'Pengeluaran',
+                    data: pengeluaranData,
+                    borderColor: '#ef4444',
+                    borderWidth: 2.75,
+                    backgroundColor: createRedGradient(ctx),
+                    fill: true,
+                    tension: 0.38,
+                    pointBackgroundColor: '#ef4444',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 7,
+                    pointHoverBorderWidth: 2.5
+                }
+            ];
+        }
+
+        function initOrUpdateChart() {
+            if (financeChartInstance) {
+                financeChartInstance.destroy();
+            }
+
+            financeChartInstance = new Chart(ctx, {
+                type: currentType,
+                data: {
+                    labels: chartData.labels,
+                    datasets: getDatasets(currentType, currentMode)
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: {
+                        duration: 350,
+                        easing: 'easeOutQuart'
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1c130d',
+                            titleColor: '#f5efe8',
+                            bodyColor: '#ffffff',
+                            borderColor: 'rgba(255, 255, 255, 0.12)',
+                            borderWidth: 1,
+                            padding: 12,
+                            cornerRadius: 12,
+                            displayColors: true,
+                            boxWidth: 8,
+                            boxHeight: 8,
+                            boxPadding: 4,
+                            usePointStyle: true,
+                            callbacks: {
+                                title: function(items) {
+                                    if (!items.length) return '';
+                                    const index = items[0].dataIndex;
+                                    if (chartData.full_dates && chartData.full_dates[index]) {
+                                        return chartData.full_dates[index];
+                                    }
+                                    return items[0].label;
+                                },
+                                label: function(context) {
+                                    const val = Number(context.raw || 0);
+                                    return ' ' + context.dataset.label + ': Rp ' + val.toLocaleString('id-ID');
+                                },
+                                afterBody: function(items) {
+                                    if (items.length < 2) return '';
+                                    const rev = Number(items[0]?.raw || 0);
+                                    const exp = Number(items[1]?.raw || 0);
+                                    const diff = rev - exp;
+                                    const prefix = diff > 0 ? '+ Rp ' : (diff < 0 ? '- Rp ' : 'Rp ');
+                                    const absVal = Math.abs(diff).toLocaleString('id-ID');
+                                    const label = currentMode === 'daily' ? 'Selisih Hari Ini' : 'Laba Akumulatif';
+                                    return '\n' + label + ': ' + prefix + absVal;
+                                }
                             }
                         }
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: { display: false },
-                        ticks: {
-                            color: '#8f7664',
-                            font: { size: 10, weight: 'bold' },
-                            autoSkip: true,
-                            maxTicksLimit: 7
-                        }
                     },
-                    y: {
-                        border: { dash: [5, 5] },
-                        grid: { color: '#f0ebe5' },
-                        beginAtZero: true,
-                        ticks: {
-                            color: '#8f7664',
-                            font: { size: 10, weight: 'bold' },
-                            maxTicksLimit: 5,
-                            callback: function(value) {
-                                if (value >= 1000000) {
-                                    return (value / 1000000).toFixed(value % 1000000 === 0 ? 0 : 1) + 'M';
-                                } else if (value >= 1000) {
-                                    return (value / 1000).toFixed(0) + 'k';
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: {
+                                color: '#8f7664',
+                                font: { size: 10, weight: '600' },
+                                maxRotation: 0,
+                                autoSkip: true,
+                                maxTicksLimit: 12
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grace: '8%',
+                            grid: {
+                                color: '#f0ebe5'
+                            },
+                            border: { dash: [4, 4], display: false },
+                            ticks: {
+                                color: '#8f7664',
+                                font: { size: 10, weight: '600' },
+                                maxTicksLimit: 6,
+                                callback: function(value) {
+                                    if (value === 0) return 'Rp 0';
+                                    if (value >= 1000000) {
+                                        return 'Rp ' + (value / 1000000).toFixed(value % 1000000 === 0 ? 0 : 1) + 'M';
+                                    } else if (value >= 1000) {
+                                        return 'Rp ' + (value / 1000).toFixed(0) + 'k';
+                                    }
+                                    return 'Rp ' + value;
                                 }
-                                return value;
                             }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
+
+        // Initialize Chart
+        initOrUpdateChart();
+
+        // Setup Mode Toggles (Harian vs Akumulasi)
+        const btnDaily = document.getElementById('btn-chart-daily');
+        const btnCumulative = document.getElementById('btn-chart-cumulative');
+        const subLabel = document.getElementById('chart-sub-label');
+
+        if (btnDaily && btnCumulative) {
+            btnDaily.addEventListener('click', function() {
+                if (currentMode === 'daily') return;
+                currentMode = 'daily';
+                btnDaily.className = 'px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all bg-[#21140b] text-white shadow-xs cursor-pointer';
+                btnCumulative.className = 'px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all text-[#8f7664] hover:text-[#21140b] cursor-pointer';
+                if (subLabel) {
+                    subLabel.textContent = 'Arus Kas Harian (Grafik turun ke 0 saat tidak ada aktivitas transaksi)';
+                }
+                initOrUpdateChart();
+            });
+
+            btnCumulative.addEventListener('click', function() {
+                if (currentMode === 'cumulative') return;
+                currentMode = 'cumulative';
+                btnCumulative.className = 'px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all bg-[#21140b] text-white shadow-xs cursor-pointer';
+                btnDaily.className = 'px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all text-[#8f7664] hover:text-[#21140b] cursor-pointer';
+                if (subLabel) {
+                    subLabel.textContent = 'Tren Akumulasi Kas Berjalan (Total Saldo Akumulatif Periode Ini)';
+                }
+                initOrUpdateChart();
+            });
+        }
+
+        // Setup Chart Type Toggles (Area Line vs Bar)
+        const btnTypeLine = document.getElementById('btn-chart-type-line');
+        const btnTypeBar = document.getElementById('btn-chart-type-bar');
+
+        if (btnTypeLine && btnTypeBar) {
+            btnTypeLine.addEventListener('click', function() {
+                if (currentType === 'line') return;
+                currentType = 'line';
+                btnTypeLine.className = 'p-1.5 text-xs font-bold rounded-lg transition-all bg-white text-[#21140b] shadow-2xs cursor-pointer';
+                btnTypeBar.className = 'p-1.5 text-xs font-bold rounded-lg transition-all text-[#8f7664] hover:text-[#21140b] cursor-pointer';
+                initOrUpdateChart();
+            });
+
+            btnTypeBar.addEventListener('click', function() {
+                if (currentType === 'bar') return;
+                currentType = 'bar';
+                btnTypeBar.className = 'p-1.5 text-xs font-bold rounded-lg transition-all bg-white text-[#21140b] shadow-2xs cursor-pointer';
+                btnTypeLine.className = 'p-1.5 text-xs font-bold rounded-lg transition-all text-[#8f7664] hover:text-[#21140b] cursor-pointer';
+                initOrUpdateChart();
+            });
+        }
 
         // --- Custom Periode Dropdown ---
         const btnPeriode = document.getElementById('btn-periode-dropdown');

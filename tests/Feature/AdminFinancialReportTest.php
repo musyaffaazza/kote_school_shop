@@ -549,3 +549,60 @@ test('admin can export financial report to pdf and excel', function () {
     expect($excelResponse->headers->get('content-type'))->toContain('vnd.ms-excel');
     $excelResponse->assertSee('KOTE SCHOOL SHOP');
 });
+
+test('financial report chart does not display future days and drops to zero on days without transactions', function () {
+    $admin = User::factory()->create(['role' => 'admin']);
+    $pelanggan = User::factory()->create(['role' => 'pelanggan']);
+
+    // Create an order on day 1 of this month
+    $day1 = Carbon::now()->startOfMonth()->setTime(10, 0);
+    $order1 = Pesanan::create([
+        'id_user' => $pelanggan->id_user,
+        'tanggal_pesan' => $day1,
+        'total_harga' => 50000,
+        'metode_pembayaran' => 'QRIS',
+        'status_pesanan' => 'selesai',
+    ]);
+    Pembayaran::create([
+        'id_pesanan' => $order1->id_pesanan,
+        'metode' => 'QRIS',
+        'nominal' => 50000,
+        'tanggal_bayar' => $day1,
+        'status' => 'berhasil',
+    ]);
+
+    // Expense on day 2 of this month
+    $day2 = Carbon::now()->startOfMonth()->addDays(1)->format('Y-m-d');
+    Pengeluaran::create([
+        'kategori' => 'Bahan Baku',
+        'keterangan' => 'Beli Susu',
+        'jumlah' => 20000,
+        'tanggal' => $day2,
+        'metode_pembayaran' => 'Tunai',
+        'id_user' => $admin->id_user,
+    ]);
+
+    $response = $this->actingAs($admin)->get(route('admin.laporan-keuangan.index', ['periode' => 'bulan_ini']));
+    $response->assertStatus(200);
+
+    $chartData = $response->viewData('chartData');
+    
+    // Check that labels only extend up to today, not the full 30/31 days of month if today < month end
+    $expectedDaysCount = Carbon::today()->day;
+    expect(count($chartData['labels']))->toBe($expectedDaysCount);
+
+    // Day 1 has 50k revenue, 0 expense
+    expect($chartData['pemasukan_harian'][0])->toBe(50000);
+    expect($chartData['pengeluaran_harian'][0])->toBe(0);
+
+    // If today is day 3 or later, days with no orders must have 0 (chart drops to 0)
+    if ($expectedDaysCount >= 3) {
+        expect($chartData['pemasukan_harian'][2])->toBe(0);
+        expect($chartData['pengeluaran_harian'][2])->toBe(0);
+    }
+
+    // Default 'pemasukan' array should be daily (dropping to zero on empty days)
+    expect($chartData['pemasukan'])->toEqual($chartData['pemasukan_harian']);
+    expect($chartData['pengeluaran'])->toEqual($chartData['pengeluaran_harian']);
+});
+

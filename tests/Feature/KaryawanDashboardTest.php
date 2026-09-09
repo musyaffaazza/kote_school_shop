@@ -227,3 +227,41 @@ test('karyawan can update order status successfully via form submission', functi
         'status_pesanan' => 'sedang_dibuat',
     ]);
 });
+
+test('unapproved user orders do not enter daftar pesanan until payment is verified and approved', function () {
+    $karyawan = User::factory()->create(['role' => 'karyawan']);
+    $pelanggan = User::factory()->create(['role' => 'pelanggan', 'nama' => 'Budi Santoso']);
+
+    // 1. Order is created with pending payment (status: menunggu)
+    $pesanan = Pesanan::create([
+        'id_user' => $pelanggan->id_user,
+        'tanggal_pesan' => now(),
+        'total_harga' => 25000,
+        'metode_pembayaran' => 'Transfer Bank',
+        'status_pesanan' => 'diproses',
+    ]);
+
+    $pembayaran = Pembayaran::create([
+        'id_pesanan' => $pesanan->id_pesanan,
+        'metode' => 'Transfer Bank',
+        'nominal' => 25000,
+        'tanggal_bayar' => now(),
+        'status' => 'menunggu',
+    ]);
+
+    // 2. Karyawan visits Daftar Pesanan -> order must NOT be visible yet!
+    $responseBefore = $this->actingAs($karyawan)->get(route('karyawan.pesanan'));
+    $responseBefore->assertStatus(200);
+    $responseBefore->assertDontSee($pesanan->order_number);
+
+    // 3. Karyawan approves the payment
+    $approveResponse = $this->actingAs($karyawan)->post(route('karyawan.verifikasi.setujui', $pembayaran));
+    $approveResponse->assertRedirect(route('karyawan.verifikasi'));
+
+    // 4. Now Karyawan visits Daftar Pesanan -> order MUST be visible in the queue!
+    $responseAfter = $this->actingAs($karyawan)->get(route('karyawan.pesanan'));
+    $responseAfter->assertStatus(200);
+    $responseAfter->assertSee($pesanan->order_number);
+    $responseAfter->assertSee('Budi Santoso');
+});
+

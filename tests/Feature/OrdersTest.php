@@ -212,6 +212,7 @@ test('storing an order preserves item notes and order note and displays on emplo
 
     // As employee, view pesanan dashboard
     $karyawan = User::factory()->create(['role' => 'karyawan']);
+    $pesanan->pembayaran->update(['status' => 'berhasil']);
     $employeeResponse = $this->actingAs($karyawan)->get(route('karyawan.pesanan'));
 
     $employeeResponse->assertStatus(200);
@@ -619,6 +620,14 @@ test('employee order board displays diantar badge and delivery location', functi
         'tipe_pesanan' => 'diantar',
         'alamat_pengiriman' => 'Kelas X DKV 2',
         'status_pesanan' => 'diproses',
+    ]);
+
+    Pembayaran::create([
+        'id_pesanan' => $pesanan->id_pesanan,
+        'metode' => 'QRIS',
+        'nominal' => 20000,
+        'tanggal_bayar' => now(),
+        'status' => 'berhasil',
     ]);
 
     $karyawan = User::factory()->create(['role' => 'karyawan']);

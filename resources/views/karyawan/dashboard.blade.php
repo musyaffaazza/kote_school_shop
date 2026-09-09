@@ -23,27 +23,86 @@
                 Cari
             </button>
         </form>
-        <div class="flex gap-3 items-center justify-end w-full sm:w-auto shrink-0">
+        <div class="flex gap-2.5 items-center justify-end w-full sm:w-auto shrink-0">
             {{-- Date selector dropdown --}}
-            <form method="GET" action="{{ route('karyawan.dashboard') }}" class="relative w-full sm:w-auto">
-                @if(request('search'))
-                    <input type="hidden" name="search" value="{{ request('search') }}">
-                @endif
-                <label for="karyawan-date-filter" class="flex items-center justify-between gap-3 w-full sm:w-auto bg-[#fdfbf9] border border-[#e8ded5] text-xs font-bold rounded-xl px-4 py-2.5 text-[#21140b] focus:outline-none hover:bg-white transition-all cursor-pointer">
+            <div class="relative w-full sm:w-auto" id="karyawan-date-dropdown-wrapper">
+                <button type="button" id="btn-karyawan-date" class="flex items-center justify-between gap-3 w-full sm:w-auto bg-[#fdfbf9] border border-[#e8ded5] text-xs font-bold rounded-xl px-4 py-2.5 text-[#21140b] hover:bg-white hover:border-[#3d2a1f]/30 transition-all cursor-pointer shadow-sm">
                     <span class="flex items-center gap-2">
                         <svg class="h-4 w-4 text-[#8f7664]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        <span>{{ request('date') ? \Carbon\Carbon::parse(request('date'))->locale('id')->translatedFormat('d M Y') : 'Pilih Tanggal' }}</span>
+                        <span>
+                            @if(request('date'))
+                                @if(request('date') === date('Y-m-d'))
+                                    Hari Ini ({{ \Carbon\Carbon::parse(request('date'))->locale('id')->translatedFormat('d M Y') }})
+                                @elseif(request('date') === date('Y-m-d', strtotime('-1 day')))
+                                    Kemarin ({{ \Carbon\Carbon::parse(request('date'))->locale('id')->translatedFormat('d M Y') }})
+                                @else
+                                    {{ \Carbon\Carbon::parse(request('date'))->locale('id')->translatedFormat('d M Y') }}
+                                @endif
+                            @else
+                                Pilih Tanggal
+                            @endif
+                        </span>
                     </span>
-                    <input type="date" id="karyawan-date-filter" name="date" value="{{ request('date') }}" onchange="this.form.submit()" class="sr-only" />
-                    <svg class="h-3.5 w-3.5 text-[#8f7664]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <svg class="h-3.5 w-3.5 text-[#8f7664] transition-transform duration-200" id="karyawan-date-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
-                </label>
-            </form>
-            {{-- Filter settings icon --}}
-            <a href="{{ route('karyawan.dashboard') }}" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#21140b] text-white hover:bg-[#3d2a1f] transition-all cursor-pointer" title="Reset Filter">
+                </button>
+
+                {{-- Dropdown Menu Popup --}}
+                <div id="karyawan-date-menu" class="absolute right-0 mt-2 w-72 rounded-2xl bg-white border border-[#ede6df] shadow-2xl z-50 p-4 space-y-4 hidden">
+                    {{-- Pilihan Cepat --}}
+                    <div class="space-y-2">
+                        <p class="text-[10px] font-extrabold uppercase tracking-wider text-[#8f7664]">Pilihan Cepat:</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <a href="{{ route('karyawan.dashboard', array_merge(request()->except('date'), ['date' => date('Y-m-d')])) }}"
+                               class="flex items-center justify-center py-2 px-3 rounded-xl border text-xs font-bold transition-all {{ request('date') === date('Y-m-d') || !request('date') ? 'bg-[#3d2a1f] text-white border-[#3d2a1f]' : 'bg-[#fdfbf9] text-[#5b4f45] border-[#e8ded5] hover:bg-[#faf5f0]' }}">
+                                Hari Ini
+                            </a>
+                            <a href="{{ route('karyawan.dashboard', array_merge(request()->except('date'), ['date' => date('Y-m-d', strtotime('-1 day'))])) }}"
+                               class="flex items-center justify-center py-2 px-3 rounded-xl border text-xs font-bold transition-all {{ request('date') === date('Y-m-d', strtotime('-1 day')) ? 'bg-[#3d2a1f] text-white border-[#3d2a1f]' : 'bg-[#fdfbf9] text-[#5b4f45] border-[#e8ded5] hover:bg-[#faf5f0]' }}">
+                                Kemarin
+                            </a>
+                        </div>
+                    </div>
+
+                    {{-- Form Tanggal Kustom --}}
+                    <form method="GET" action="{{ route('karyawan.dashboard') }}" class="space-y-3 pt-3 border-t border-[#ede6df]/60">
+                        @if(request('search'))
+                            <input type="hidden" name="search" value="{{ request('search') }}">
+                        @endif
+                        <div>
+                            <label for="custom-date-input" class="text-[10px] font-extrabold uppercase tracking-wider text-[#8f7664] block mb-1.5">Pilih Tanggal Spesifik:</label>
+                            <input type="date"
+                                   id="custom-date-input"
+                                   name="date"
+                                   value="{{ request('date', date('Y-m-d')) }}"
+                                   required
+                                   class="w-full bg-[#fdfbf9] border border-[#e8ded5] text-xs font-bold rounded-xl px-3.5 py-2.5 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/10 focus:border-[#3d2a1f] transition-all cursor-pointer" />
+                        </div>
+
+                        <button type="submit" class="w-full flex items-center justify-center gap-2 bg-[#21140b] hover:bg-[#3d2a1f] text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm active:scale-95 cursor-pointer">
+                            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                            </svg>
+                            <span>Terapkan Tanggal</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            {{-- Reset Date & Search Filter Button --}}
+            @if(request('date') || request('search'))
+            <a href="{{ route('karyawan.dashboard') }}" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e8ded5] text-[#21140b] hover:bg-[#d5c6b8] transition-all cursor-pointer shadow-sm" title="Hapus Filter Tanggal">
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </a>
+            @endif
+
+            {{-- Refresh icon --}}
+            <a href="{{ route('karyawan.dashboard') }}" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#21140b] text-white hover:bg-[#3d2a1f] transition-all cursor-pointer shadow-sm" title="Segarkan Data">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
@@ -58,7 +117,7 @@
             <div class="flex items-center justify-between mb-4">
                 <div>
                     <h3 class="text-sm font-extrabold text-[#21140b]">Tren Penjualan Mingguan</h3>
-                    <p class="text-[11px] text-[#8f7664] font-semibold mt-0.5">{{ \Carbon\Carbon::now()->locale('id')->translatedFormat('F Y') }}</p>
+                    <p class="text-[11px] text-[#8f7664] font-semibold mt-0.5">{{ (request('date') ? \Carbon\Carbon::parse(request('date')) : \Carbon\Carbon::now())->locale('id')->translatedFormat('F Y') }}</p>
                 </div>
                 <span class="text-[#a2785d]">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -77,7 +136,7 @@
             <div class="flex items-center justify-between mb-4">
                 <div>
                     <h3 class="text-sm font-extrabold text-[#21140b]">Volume Pesanan Per Jam</h3>
-                    <p class="text-[11px] text-[#8f7664] font-semibold mt-0.5">Rata-rata Harian (08:00 - 20:00)</p>
+                    <p class="text-[11px] text-[#8f7664] font-semibold mt-0.5">{{ request('date') ? \Carbon\Carbon::parse(request('date'))->locale('id')->translatedFormat('d F Y') : 'Rata-rata Harian (08:00 - 20:00)' }}</p>
                 </div>
                 <span class="text-[#a2785d]">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -149,7 +208,7 @@
                                         default => 'bg-[#21140b] hover:bg-[#3d2a1f] text-white',
                                     };
                                 @endphp
-                                <a href="{{ route('karyawan.pesanan') }}" class="rounded-xl px-4 py-2 text-[11px] font-bold transition-all active:scale-95 cursor-pointer {{ $aksiClasses }} inline-block text-center shadow-sm">
+                                <a href="{{ $pesanan['aksiLink'] ?? route('karyawan.pesanan') }}" class="rounded-xl px-4 py-2 text-[11px] font-bold transition-all active:scale-95 cursor-pointer {{ $aksiClasses }} inline-block text-center shadow-sm">
                                     {{ $pesanan['aksi'] }}
                                 </a>
                             </td>
@@ -355,6 +414,37 @@
                     plugins: {
                         legend: { display: false },
                         tooltip: { enabled: totalDist > 0 }
+                    }
+                }
+            });
+        }
+
+        // --- Date Dropdown Toggle & Outside Click ---
+        const btnDate = document.getElementById('btn-karyawan-date');
+        const menuDate = document.getElementById('karyawan-date-menu');
+        const arrowDate = document.getElementById('karyawan-date-arrow');
+
+        if (btnDate && menuDate) {
+            btnDate.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isHidden = menuDate.classList.contains('hidden');
+                menuDate.classList.toggle('hidden');
+                if (arrowDate) {
+                    arrowDate.style.transform = isHidden ? 'rotate(180deg)' : '';
+                }
+            });
+
+            // Prevent dropdown click from closing itself
+            menuDate.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+
+            // Close dropdown on click outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#karyawan-date-dropdown-wrapper')) {
+                    menuDate.classList.add('hidden');
+                    if (arrowDate) {
+                        arrowDate.style.transform = '';
                     }
                 }
             });

@@ -99,34 +99,42 @@ class KaryawanDashboardController extends Controller
         foreach ($recentOrders as $order) {
             $menuNames = $order->detailPesanan->map(fn ($d) => $d->jumlah.'x '.($d->menu?->nama_menu ?? 'Menu'))->join(', ');
 
-            $statusColor = match ($order->status_pesanan) {
-                'dibatalkan' => 'red',
-                'diproses' => 'yellow',
-                'sedang_dibuat' => 'brown',
-                'siap_diambil', 'selesai' => 'green',
+            $isWaitingPayment = ($order->pembayaran && $order->pembayaran->status === 'menunggu');
+
+            $statusColor = match (true) {
+                $order->status_pesanan === 'dibatalkan' => 'red',
+                $isWaitingPayment => 'yellow',
+                $order->status_pesanan === 'diproses' => 'yellow',
+                $order->status_pesanan === 'sedang_dibuat' => 'brown',
+                in_array($order->status_pesanan, ['siap_diambil', 'selesai']) => 'green',
                 default => 'yellow',
             };
 
-            $statusText = match ($order->status_pesanan) {
-                'diproses' => 'Diproses',
-                'sedang_dibuat' => 'Sedang Dibuat',
-                'siap_diambil' => 'Siap Diambil',
-                'selesai' => 'Selesai',
-                'dibatalkan' => 'Dibatalkan',
+            $statusText = match (true) {
+                $order->status_pesanan === 'dibatalkan' => 'Dibatalkan',
+                $isWaitingPayment => 'Menunggu Verifikasi',
+                $order->status_pesanan === 'diproses' => 'Diproses',
+                $order->status_pesanan === 'sedang_dibuat' => 'Sedang Dibuat',
+                $order->status_pesanan === 'siap_diambil' => 'Siap Diambil',
+                $order->status_pesanan === 'selesai' => 'Selesai',
                 default => ucfirst($order->status_pesanan),
             };
 
-            $aksiText = match ($order->status_pesanan) {
-                'diproses' => 'Mulai Buat',
-                'sedang_dibuat' => 'Siap Diambil',
-                'siap_diambil' => 'Selesaikan',
+            $aksiText = match (true) {
+                $order->status_pesanan === 'dibatalkan' => 'Lihat',
+                $isWaitingPayment => 'Verifikasi',
+                $order->status_pesanan === 'diproses' => 'Mulai Buat',
+                $order->status_pesanan === 'sedang_dibuat' => 'Siap Diambil',
+                $order->status_pesanan === 'siap_diambil' => 'Selesaikan',
                 default => 'Lihat',
             };
 
-            $aksiColor = match ($order->status_pesanan) {
-                'sedang_dibuat' => 'medium',
+            $aksiColor = match (true) {
+                $order->status_pesanan === 'sedang_dibuat' => 'medium',
                 default => 'dark',
             };
+
+            $aksiLink = $isWaitingPayment ? route('karyawan.verifikasi', ['search' => $order->id_pesanan]) : route('karyawan.pesanan');
 
             $pesananTerkini[] = [
                 'id' => $order->id_pesanan,
@@ -138,6 +146,7 @@ class KaryawanDashboardController extends Controller
                 'status' => $statusText,
                 'aksiColor' => $aksiColor,
                 'aksi' => $aksiText,
+                'aksiLink' => $aksiLink,
             ];
         }
 
@@ -440,12 +449,16 @@ class KaryawanDashboardController extends Controller
 
     /**
      * Tampilkan halaman daftar pesanan (antrean) untuk karyawan.
+     * Hanya pesanan yang pembayarannya telah disetujui (status: berhasil) yang masuk ke antrean kerja.
      */
     public function pesanan(Request $request): View
     {
         $search = $request->query('search');
 
         $query = Pesanan::with(['user', 'detailPesanan.menu', 'pembayaran'])
+            ->whereHas('pembayaran', function ($q) {
+                $q->where('status', 'berhasil');
+            })
             ->whereIn('status_pesanan', ['diproses', 'sedang_dibuat', 'siap_diambil']);
 
         if ($search) {

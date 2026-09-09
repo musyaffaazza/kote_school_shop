@@ -283,16 +283,6 @@
                                     </div>
                                 </div>
                             @endif
-                                {{-- Powered By --}}
-                                <div class="flex items-center justify-center gap-2 pt-1">
-                                    <span class="text-[10px] font-semibold text-[#b5a49a] tracking-wide">Powered by</span>
-                                    <div class="flex gap-1.5">
-                                        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-[#fbf1e8] text-[9px] font-extrabold text-[#a2785d] border border-[#edd8cf]/50">O</span>
-                                        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-[#fbf1e8] text-[9px] font-extrabold text-[#a2785d] border border-[#edd8cf]/50">G</span>
-                                        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-[#fbf1e8] text-[9px] font-extrabold text-[#a2785d] border border-[#edd8cf]/50">D</span>
-                                        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-[#fbf1e8] text-[9px] font-extrabold text-[#a2785d] border border-[#edd8cf]/50">S</span>
-                                    </div>
-                                </div>
 
                             {{-- UPLOAD RECEIPT FORM --}}
                             @if($hasOrder)

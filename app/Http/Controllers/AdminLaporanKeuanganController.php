@@ -329,14 +329,16 @@ class AdminLaporanKeuanganController extends Controller
 
     /**
      * Build chart time series comparing revenue and expenses from actual database records.
+     * Accurately plots every single date/interval in the period (no skipped days).
+     * If there are no transactions on a date, the value is 0 (chart drops to 0).
+     * Strictly cuts off future dates/months that have not occurred yet.
      */
     private function buildChartTimeSeries(Carbon $startDate, Carbon $endDate, string $periode): array
     {
-        $daysCount = $startDate->diffInDays($endDate) + 1;
+        $now = Carbon::now();
+        $todayEnd = Carbon::today()->endOfDay();
 
-        // If spanning more than 60 days, group by month
-        $groupByMonth = $daysCount > 60 || $periode === 'tahun_ini';
-
+        // 1. Fetch relevant orders and expenses
         $orders = Pesanan::validRevenue()
             ->whereBetween('tanggal_pesan', [$startDate, $endDate])
             ->get(['tanggal_pesan', 'total_harga']);
@@ -347,48 +349,119 @@ class AdminLaporanKeuanganController extends Controller
         ])->get(['tanggal', 'jumlah']);
 
         $labels = [];
-        $revenueSeries = [];
-        $expenseSeries = [];
+        $fullDates = [];
         $revenueDaily = [];
         $expenseDaily = [];
+        $revenueSeries = [];
+        $expenseSeries = [];
+        $netProfitDaily = [];
+        $netProfitSeries = [];
 
         $runningRevenue = 0;
         $runningExpense = 0;
+        $isHourly = false;
 
-        if ($groupByMonth) {
+        $daysCount = $startDate->diffInDays($endDate) + 1;
+        $groupByMonth = $daysCount > 60 || $periode === 'tahun_ini';
+
+        if ($periode === 'hari_ini' || ($daysCount === 1 && $startDate->isSameDay($endDate))) {
+            // Hourly breakdown for single day (e.g. 08:00 - 22:00)
+            $isHourly = true;
+            $selectedDay = clone $startDate;
+            $isCurrentDay = $selectedDay->isToday();
+            $maxHour = $isCurrentDay ? min(22, max(8, $now->hour)) : 22;
+
+            $hourSlots = [8, 10, 12, 14, 16, 18, 20, 22];
+            // Filter slots up to current hour if today
+            $activeSlots = array_values(array_filter($hourSlots, fn ($h) => ! $isCurrentDay || $h <= $maxHour || $h === 8));
+            if (empty($activeSlots)) {
+                $activeSlots = [8];
+            }
+
+            $ordersGroupedByHour = $orders->groupBy(fn ($o) => (int) $o->tanggal_pesan->format('H'));
+            $dayExpenseTotal = (int) $expenses->sum('jumlah');
+
+            $firstSlot = true;
+            foreach ($activeSlots as $h) {
+                $slotLabel = sprintf('%02d:00', $h);
+                $labels[] = $slotLabel;
+                $fullDates[] = $selectedDay->locale('id')->isoFormat('dddd, D MMMM Y').' ('.$slotLabel.')';
+
+                // Sum orders between [h, h+2)
+                $slotRev = 0;
+                for ($hr = $h; $hr < $h + 2; $hr++) {
+                    $slotRev += (int) $ordersGroupedByHour->get($hr, collect())->sum('total_harga');
+                }
+
+                // For single-day expense: assign to first slot
+                $slotExp = $firstSlot ? $dayExpenseTotal : 0;
+                $firstSlot = false;
+
+                $runningRevenue += $slotRev;
+                $runningExpense += $slotExp;
+
+                $revenueDaily[] = $slotRev;
+                $expenseDaily[] = $slotExp;
+                $revenueSeries[] = $runningRevenue;
+                $expenseSeries[] = $runningExpense;
+                $netProfitDaily[] = $slotRev - $slotExp;
+                $netProfitSeries[] = $runningRevenue - $runningExpense;
+            }
+        } elseif ($groupByMonth) {
             $ordersGrouped = $orders->groupBy(fn ($o) => $o->tanggal_pesan->format('Y-m'));
             $expenseGrouped = $expenses->groupBy(fn ($e) => Carbon::parse($e->tanggal)->format('Y-m'));
 
             $cursor = (clone $startDate)->startOfMonth();
             $endMonth = (clone $endDate)->endOfMonth();
 
-            while ($cursor->lte($endMonth)) {
+            // Strictly cap at current month if endMonth is in future
+            $currentMonthLimit = Carbon::now()->endOfMonth();
+            $maxMonth = $endMonth->gt($currentMonthLimit) ? $currentMonthLimit : $endMonth;
+            if ($maxMonth->lt($cursor)) {
+                $maxMonth = clone $cursor;
+            }
+
+            while ($cursor->lte($maxMonth)) {
                 $key = $cursor->format('Y-m');
                 $labels[] = $cursor->locale('id')->isoFormat('MMM Y');
+                $fullDates[] = $cursor->locale('id')->isoFormat('MMMM Y');
 
-                $dayRev = (int) $ordersGrouped->get($key, collect())->sum('total_harga');
-                $dayExp = (int) $expenseGrouped->get($key, collect())->sum('jumlah');
+                $monthRev = (int) $ordersGrouped->get($key, collect())->sum('total_harga');
+                $monthExp = (int) $expenseGrouped->get($key, collect())->sum('jumlah');
 
-                $runningRevenue += $dayRev;
-                $runningExpense += $dayExp;
+                $runningRevenue += $monthRev;
+                $runningExpense += $monthExp;
 
-                $revenueDaily[] = $dayRev;
-                $expenseDaily[] = $dayExp;
+                $revenueDaily[] = $monthRev;
+                $expenseDaily[] = $monthExp;
                 $revenueSeries[] = $runningRevenue;
                 $expenseSeries[] = $runningExpense;
+                $netProfitDaily[] = $monthRev - $monthExp;
+                $netProfitSeries[] = $runningRevenue - $runningExpense;
 
                 $cursor->addMonth();
             }
         } else {
+            // Daily breakdown (Minggu ini, Bulan ini, Bulan lalu, Kustom)
             $ordersGrouped = $orders->groupBy(fn ($o) => $o->tanggal_pesan->format('Y-m-d'));
             $expenseGrouped = $expenses->groupBy(fn ($e) => Carbon::parse($e->tanggal)->format('Y-m-d'));
 
             $cursor = clone $startDate;
-            while ($cursor->lte($endDate)) {
+
+            // Strictly cap at today's end of day (do NOT show future days!)
+            $maxDate = $endDate->gt($todayEnd) ? $todayEnd : clone $endDate;
+            if ($maxDate->lt($cursor)) {
+                $maxDate = clone $cursor;
+            }
+
+            while ($cursor->lte($maxDate)) {
                 $key = $cursor->format('Y-m-d');
                 $labels[] = $cursor->locale('id')->isoFormat('D MMM');
+                $fullDates[] = $cursor->locale('id')->isoFormat('dddd, D MMMM Y');
 
+                // If no order on this day, dayRev is 0
                 $dayRev = (int) $ordersGrouped->get($key, collect())->sum('total_harga');
+                // If no expense on this day, dayExp is 0
                 $dayExp = (int) $expenseGrouped->get($key, collect())->sum('jumlah');
 
                 $runningRevenue += $dayRev;
@@ -398,18 +471,31 @@ class AdminLaporanKeuanganController extends Controller
                 $expenseDaily[] = $dayExp;
                 $revenueSeries[] = $runningRevenue;
                 $expenseSeries[] = $runningExpense;
+                $netProfitDaily[] = $dayRev - $dayExp;
+                $netProfitSeries[] = $runningRevenue - $runningExpense;
 
                 $cursor->addDay();
             }
         }
 
+        $allValues = array_merge([0], $revenueDaily, $expenseDaily);
+        $maxVal = max($allValues);
+
         return [
             'labels' => $labels,
-            'pemasukan' => $revenueSeries,
-            'pengeluaran' => $expenseSeries,
+            'full_dates' => $fullDates,
+            'pemasukan' => $revenueDaily, // DEFAULT TO DAILY SO IT PROPERLY DROPS TO 0!
+            'pengeluaran' => $expenseDaily, // DEFAULT TO DAILY
             'pemasukan_harian' => $revenueDaily,
             'pengeluaran_harian' => $expenseDaily,
-            'maxVal' => max(array_merge([100000], $revenueSeries, $expenseSeries)),
+            'pemasukan_akumulasi' => $revenueSeries,
+            'pengeluaran_akumulasi' => $expenseSeries,
+            'laba_harian' => $netProfitDaily,
+            'laba_akumulasi' => $netProfitSeries,
+            'maxVal' => $maxVal > 0 ? $maxVal : 100000,
+            'total_pemasukan' => array_sum($revenueDaily),
+            'total_pengeluaran' => array_sum($expenseDaily),
+            'is_hourly' => $isHourly,
         ];
     }
 
