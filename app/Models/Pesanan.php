@@ -60,6 +60,14 @@ class Pesanan extends Model
     }
 
     /**
+     * @return HasOne<Ulasan, $this>
+     */
+    public function ulasan(): HasOne
+    {
+        return $this->hasOne(Ulasan::class, 'id_pesanan', 'id_pesanan');
+    }
+
+    /**
      * Scope a query to only include valid revenue orders.
      * Valid revenue orders must have successful/verified payment and not be cancelled.
      *
@@ -129,5 +137,29 @@ class Pesanan extends Model
     public function isDiantar(): bool
     {
         return $this->tipe_pesanan === 'diantar';
+    }
+
+    /**
+     * Get the most ordered item in this order (highest quantity).
+     */
+    public function getTopDetailAttribute(): ?DetailPesanan
+    {
+        return $this->detailPesanan->sortByDesc('jumlah')->first();
+    }
+
+    /**
+     * Get the menu of the most ordered item.
+     */
+    public function getTopMenuAttribute(): ?Menu
+    {
+        return $this->top_detail?->menu;
+    }
+
+    /**
+     * Get the image of the most ordered item.
+     */
+    public function getTopMenuImageAttribute(): ?string
+    {
+        return $this->top_menu?->gambar;
     }
 }

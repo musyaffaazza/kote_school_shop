@@ -18,6 +18,7 @@ class Ulasan extends Model
 
     protected $fillable = [
         'id_user',
+        'id_pesanan',
         'id_menu',
         'rating',
         'komentar',
@@ -50,6 +51,14 @@ class Ulasan extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'id_user', 'id_user');
+    }
+
+    /**
+     * @return BelongsTo<Pesanan, $this>
+     */
+    public function pesanan(): BelongsTo
+    {
+        return $this->belongsTo(Pesanan::class, 'id_pesanan', 'id_pesanan');
     }
 
     /**

@@ -43,29 +43,25 @@
             @endphp
             <div class="rounded-2xl bg-white border border-[#ede6df]/60 shadow-sm px-5 py-5 sm:px-6 sm:py-5">
                 <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                    {{-- Left Side: Icon + Order Info --}}
+                    {{-- Left Side: Menu Photo + Order Info --}}
                     <div class="flex items-start gap-4">
-                        {{-- Order Icon (Rounded Square) --}}
-                        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#f5ebe2]">
-                            @if($isCancelled)
-                                {{-- Cancelled icon --}}
-                                <svg class="h-5 w-5 text-[#b5a49a]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                        @php
+                            $topMenu = $order->top_menu;
+                            $topMenuImg = $order->top_menu_image;
+                        @endphp
+                        {{-- Menu Photo Container --}}
+                        <div class="flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-2xl bg-[#f5ebe2] border border-[#ede6df]/80 overflow-hidden shadow-2xs relative">
+                            @if($topMenuImg)
+                                <img src="{{ $topMenuImg }}" alt="{{ $topMenu?->nama_menu ?? 'Menu' }}" class="h-full w-full object-cover transition-transform duration-300 hover:scale-105" />
+                            @elseif($isCancelled)
+                                {{-- Cancelled icon fallback --}}
+                                <svg class="h-6 w-6 text-[#b5a49a]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
                                     <circle cx="12" cy="12" r="9" />
                                     <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
                                 </svg>
-                            @elseif($isEven)
-                                {{-- Fork & Knife icon --}}
-                                <svg class="h-5 w-5 text-[#a2785d]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                                    <!-- Fork -->
-                                    <path d="M5 3v6a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V3" />
-                                    <path d="M7 11v10" />
-                                    <!-- Knife -->
-                                    <path d="M17 3v18" />
-                                    <path d="M17 3a3 3 0 0 1 3 3v6h-3" />
-                                </svg>
                             @else
-                                {{-- Coffee cup icon --}}
-                                <svg class="h-5 w-5 text-[#a2785d]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                {{-- Coffee cup icon fallback --}}
+                                <svg class="h-6 w-6 text-[#a2785d]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             @endif

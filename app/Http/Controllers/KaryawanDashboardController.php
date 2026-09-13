@@ -184,7 +184,7 @@ class KaryawanDashboardController extends Controller
             $query->where('kategori', $request->input('kategori'));
         }
 
-        $menus = $query->orderBy('nama_menu')->paginate(3)->withQueryString();
+        $menus = $query->orderBy('nama_menu')->paginate(10)->withQueryString();
         $categories = Menu::select('kategori')->distinct()->pluck('kategori');
 
         return view('karyawan.menu', [
@@ -347,7 +347,7 @@ class KaryawanDashboardController extends Controller
         });
 
         // Get transactions
-        $transactions = $query->orderBy('tanggal_pesan', 'desc')->paginate(5)->withQueryString();
+        $transactions = $query->orderBy('tanggal_pesan', 'desc')->paginate(10)->withQueryString();
 
         // Calculate bottom cards stats
         $totalSalesToday = Pesanan::validRevenue()

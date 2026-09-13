@@ -36,18 +36,12 @@ class OrderController extends Controller
             ->orderByDesc('tanggal_pesan')
             ->get();
 
-        // Collect menu IDs that user has already reviewed
-        $reviewedMenuIds = Ulasan::where('id_user', $userId)
+        // Determine which orders have already been reviewed by order ID
+        $sudahDiulasOrderIds = Ulasan::where('id_user', $userId)
+            ->whereNotNull('id_pesanan')
             ->where('status', 'aktif')
-            ->pluck('id_menu')
+            ->pluck('id_pesanan')
             ->toArray();
-
-        // Determine which orders have already been reviewed
-        $sudahDiulasOrderIds = $pesanan->filter(function ($order) use ($reviewedMenuIds) {
-            $orderMenuIds = $order->detailPesanan->pluck('id_menu')->toArray();
-
-            return ! empty(array_intersect($orderMenuIds, $reviewedMenuIds));
-        })->pluck('id_pesanan')->toArray();
 
         return view('orders.index', compact('pesanan', 'status', 'sudahDiulasOrderIds'));
     }

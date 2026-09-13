@@ -68,9 +68,9 @@
             <div id="sidebar-overlay" class="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm hidden lg:hidden" onclick="toggleSidebar()"></div>
 
             {{-- MAIN CONTENT --}}
-            <div class="flex-1 lg:ml-[230px]">
+            <div class="flex-1 lg:ml-[230px] flex flex-col min-w-0">
                 {{-- TOP BAR --}}
-                <header class="sticky top-0 z-20 flex items-center justify-between bg-[#f5f0eb]/80 backdrop-blur-md px-6 py-4 lg:px-8">
+                <header class="sticky top-0 z-20 flex items-center justify-between bg-[#f5f0eb]/80 backdrop-blur-md px-6 py-4 lg:px-8 border-b border-[#ede6df]/60">
                     {{-- Mobile Menu Button --}}
                     <button id="btn-mobile-menu" onclick="toggleSidebar()" class="lg:hidden flex h-10 w-10 items-center justify-center rounded-xl bg-white text-[#21140b] shadow-sm cursor-pointer">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -91,15 +91,12 @@
                         {{-- Barista Profile Container --}}
                         <div class="relative">
                             <button id="btn-profile" onclick="openModal('modal-profile', 'edit')" class="flex items-center gap-3 rounded-xl bg-white px-3.5 py-2 shadow-sm hover:shadow-md hover:bg-[#fcfaf8] transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#21140b]/20" title="Edit Profil Barista">
-                                <div class="relative">
-                                    <div id="topbar-user-avatar" class="flex h-8 w-8 items-center justify-center rounded-full bg-[#3d2a1f] text-xs font-bold text-[#d5c6b8]">
-                                        {{ substr(auth()->user()->nama ?? 'BS', 0, 2) }}
-                                    </div>
-                                    <span id="barista-status-dot" class="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-500 ring-2 ring-white"></span>
+                                <div id="topbar-user-avatar" class="flex h-8 w-8 items-center justify-center rounded-full bg-[#3d2a1f] text-xs font-bold text-[#d5c6b8]">
+                                    {{ substr(auth()->user()->nama ?? 'BS', 0, 2) }}
                                 </div>
                                 <div class="hidden sm:block text-left">
                                     <p id="barista-display-name" class="text-xs font-bold text-[#21140b] leading-tight truncate max-w-[120px]">{{ auth()->user()->nama ?? 'Budi Santoso' }}</p>
-                                    <p id="barista-status-text" class="text-[10px] font-medium text-emerald-600">On Duty 🟢</p>
+                                    <p class="text-[10px] text-[#8f7664] font-medium">Staff Barista</p>
                                 </div>
                                 <svg class="h-4 w-4 text-[#8f7664] hidden sm:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -110,12 +107,12 @@
                 </header>
 
                 {{-- Page Content --}}
-                <main class="px-6 py-6 lg:px-8">
+                <main class="px-6 py-6 lg:px-8 flex-1">
                     @yield('content')
                 </main>
 
                 {{-- Footer --}}
-                <footer class="px-6 py-6 text-center text-xs text-[#8f7664] lg:px-8">
+                <footer class="px-6 py-4 text-center text-xs text-[#8f7664] border-t border-[#ede6df]/60">
                     © {{ date('Y') }} KOTE SCHOOL SHOP System • Modern Artisanal Design
                 </footer>
             </div>
@@ -193,15 +190,6 @@
                         <div class="min-w-0">
                             <p class="text-[10px] font-semibold text-[#8f7664] uppercase tracking-wider">No. Telepon</p>
                             <p id="modal-profile-phone" class="text-xs font-bold text-[#21140b]">{{ auth()->user()->no_hp ?? '0812-3456-7890' }}</p>
-                        </div>
-                    </div>
-
-                    {{-- Status Shift --}}
-                    <div class="rounded-xl bg-[#faf7f4] p-3 text-center">
-                        <p class="text-[10px] font-semibold text-[#8f7664] uppercase tracking-wider">Status Shift</p>
-                        <div class="mt-1 inline-flex items-center gap-1.5">
-                            <span id="modal-status-indicator" class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <span id="modal-status-text" class="text-xs font-bold text-emerald-600">On Duty</span>
                         </div>
                     </div>
 
@@ -319,46 +307,6 @@
                     modal.classList.add('hidden');
                     document.body.style.overflow = '';
                 }, 300);
-            }
-
-            // Status Switcher Handler
-            function setBaristaStatus(status) {
-                const statusDot = document.getElementById('barista-status-dot');
-                const statusText = document.getElementById('barista-status-text');
-                const modalIndicator = document.getElementById('modal-status-indicator');
-                const modalText = document.getElementById('modal-status-text');
-
-                const btnOn = document.getElementById('status-btn-onduty');
-                const btnBreak = document.getElementById('status-btn-break');
-                const btnOff = document.getElementById('status-btn-offduty');
-
-                // Reset button styles
-                [btnOn, btnBreak, btnOff].forEach(btn => {
-                    if (btn) btn.className = "status-option-btn rounded-xl py-1.5 px-2 font-semibold bg-white text-[#5a4d42] border border-[#e8ded5] hover:bg-[#f5f0eb] cursor-pointer text-center";
-                });
-
-                if (status === 'onduty') {
-                    if (statusDot) statusDot.className = "absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-500 ring-2 ring-white";
-                    if (statusText) { statusText.innerText = "On Duty 🟢"; statusText.className = "text-[10px] font-medium text-emerald-600"; }
-                    if (modalIndicator) modalIndicator.className = "h-2 w-2 rounded-full bg-emerald-500 animate-pulse";
-                    if (modalText) { modalText.innerText = "On Duty"; modalText.className = "text-xs font-bold text-emerald-600"; }
-                    if (btnOn) btnOn.className = "status-option-btn rounded-xl py-1.5 px-2 font-bold bg-emerald-500 text-white shadow-sm cursor-pointer text-center";
-                    showToast("Status Barista: On Duty 🟢 (Aktif Melayani)");
-                } else if (status === 'break') {
-                    if (statusDot) statusDot.className = "absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-amber-500 ring-2 ring-white";
-                    if (statusText) { statusText.innerText = "Istirahat 🟡"; statusText.className = "text-[10px] font-medium text-amber-600"; }
-                    if (modalIndicator) modalIndicator.className = "h-2 w-2 rounded-full bg-amber-500 animate-pulse";
-                    if (modalText) { modalText.innerText = "Istirahat"; modalText.className = "text-xs font-bold text-amber-600"; }
-                    if (btnBreak) btnBreak.className = "status-option-btn rounded-xl py-1.5 px-2 font-bold bg-amber-500 text-white shadow-sm cursor-pointer text-center";
-                    showToast("Status Barista: Istirahat 🟡 (Break Time)");
-                } else if (status === 'offduty') {
-                    if (statusDot) statusDot.className = "absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-red-500 ring-2 ring-white";
-                    if (statusText) { statusText.innerText = "Off Duty 🔴"; statusText.className = "text-[10px] font-medium text-red-600"; }
-                    if (modalIndicator) modalIndicator.className = "h-2 w-2 rounded-full bg-red-500";
-                    if (modalText) { modalText.innerText = "Off Duty"; modalText.className = "text-xs font-bold text-red-600"; }
-                    if (btnOff) btnOff.className = "status-option-btn rounded-xl py-1.5 px-2 font-bold bg-red-500 text-white shadow-sm cursor-pointer text-center";
-                    showToast("Status Barista: Off Duty 🔴 (Selesai Shift)");
-                }
             }
 
             // Profile Tabs & Editing

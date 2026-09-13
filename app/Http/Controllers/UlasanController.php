@@ -39,11 +39,10 @@ class UlasanController extends Controller
             }
         }
 
-        // Check if user already reviewed any menu from this order
+        // Check if this specific order has already been reviewed
         $sudahDiulas = false;
-        if ($pesanan && $menus->isNotEmpty()) {
-            $sudahDiulas = Ulasan::where('id_user', $user->id_user)
-                ->whereIn('id_menu', $menus->pluck('id_menu'))
+        if ($pesanan) {
+            $sudahDiulas = Ulasan::where('id_pesanan', $pesanan->id_pesanan)
                 ->where('status', 'aktif')
                 ->exists();
         }
@@ -82,22 +81,24 @@ class UlasanController extends Controller
             }
         }
 
-        // Use only the first menu_id to avoid duplicate review cards
+        // Use the first menu_id for primary review association
         $primaryMenuId = reset($menuIds) ?: null;
 
         if ($primaryMenuId) {
-            // Prevent duplicate reviews for the same user+menu
-            $alreadyReviewed = Ulasan::where('id_user', $user->id_user)
-                ->where('id_menu', $primaryMenuId)
-                ->where('status', 'aktif')
-                ->exists();
+            // Prevent duplicate review for the same specific order
+            if ($pesanan) {
+                $alreadyReviewed = Ulasan::where('id_pesanan', $pesanan->id_pesanan)
+                    ->where('status', 'aktif')
+                    ->exists();
 
-            if ($alreadyReviewed) {
-                return redirect()->to(route('home').'#ulasan')->with('success', 'Anda sudah memberikan ulasan sebelumnya.');
+                if ($alreadyReviewed) {
+                    return redirect()->to(route('home').'#ulasan')->with('success', 'Pesanan ini sudah pernah Anda beri ulasan.');
+                }
             }
 
             Ulasan::create([
                 'id_user' => $user->id_user,
+                'id_pesanan' => $pesanan?->id_pesanan,
                 'id_menu' => $primaryMenuId,
                 'rating' => $validated['rating'],
                 'komentar' => $validated['komentar'],
