@@ -44,8 +44,11 @@
                     <x-admin.nav-link href="{{ route('admin.ulasan.index') }}" icon="reviews" :active="request()->routeIs('admin.ulasan.*')">
                         Review Management
                     </x-admin.nav-link>
-                    <x-admin.nav-link href="{{ route('admin.karyawan.index') }}" icon="users" :active="request()->routeIs('admin.karyawan.*')">
+                    <x-admin.nav-link href="{{ route('admin.karyawan.index') }}" icon="users-manage" :active="request()->routeIs('admin.karyawan.*')">
                         Karyawan
+                    </x-admin.nav-link>
+                    <x-admin.nav-link href="{{ route('admin.pengguna.index') }}" icon="users" :active="request()->routeIs('admin.pengguna.*')">
+                        Pengguna
                     </x-admin.nav-link>
                 </nav>
 

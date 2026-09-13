@@ -19,6 +19,14 @@ class User extends Authenticatable
     protected $primaryKey = 'id_user';
 
     /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'id_user';
+    }
+
+    /**
      * Disable Laravel's default updated_at; only created_at exists in migration.
      */
     public $timestamps = false;
@@ -63,6 +71,7 @@ class User extends Authenticatable
         return [
             'password' => 'hashed',
             'cart' => 'array',
+            'created_at' => 'datetime',
         ];
     }
 
@@ -72,5 +81,46 @@ class User extends Authenticatable
     public function pesanan(): HasMany
     {
         return $this->hasMany(Pesanan::class, 'id_user', 'id_user');
+    }
+
+    /**
+     * Get formatted customer ID (e.g. #KT-USR-0104).
+     */
+    public function getFormattedIdAttribute(): string
+    {
+        return '#KT-USR-'.str_pad((string) $this->id_user, 4, '0', STR_PAD_LEFT);
+    }
+
+    /**
+     * Get URL for identity photo (KTP/Kartu Pelajar).
+     */
+    public function getFotoIdentitasUrlAttribute(): ?string
+    {
+        if (empty($this->foto_identitas)) {
+            return null;
+        }
+
+        if (str_starts_with($this->foto_identitas, 'http://') || str_starts_with($this->foto_identitas, 'https://')) {
+            return $this->foto_identitas;
+        }
+
+        $cleanPath = ltrim(str_replace('/storage/', '', $this->foto_identitas), '/');
+        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($cleanPath)) {
+            return asset('storage/'.$cleanPath);
+        }
+
+        return null;
+    }
+
+    /**
+     * Get gender display label.
+     */
+    public function getJenisKelaminLabelAttribute(): string
+    {
+        return match ($this->jenis_kelamin) {
+            'L' => 'Laki-laki',
+            'P' => 'Perempuan',
+            default => '-',
+        };
     }
 }

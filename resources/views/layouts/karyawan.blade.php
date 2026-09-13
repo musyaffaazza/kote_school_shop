@@ -39,6 +39,9 @@
                     <x-karyawan.nav-link href="{{ route('karyawan.riwayat') }}" icon="history" :active="request()->routeIs('karyawan.riwayat')">
                         Riwayat Transaksi
                     </x-karyawan.nav-link>
+                    <x-karyawan.nav-link href="{{ route('karyawan.pengguna') }}" icon="users" :active="request()->routeIs('karyawan.pengguna*')">
+                        Data Pelanggan
+                    </x-karyawan.nav-link>
                     <x-karyawan.nav-link href="{{ route('karyawan.laporan-keuangan.index') }}" icon="finance" :active="request()->routeIs('karyawan.laporan-keuangan.*')">
                         Laporan Keuangan
                     </x-karyawan.nav-link>

@@ -63,10 +63,10 @@ class AdminMenuController extends Controller
             'harga' => 'required|numeric|min:0',
             'stok' => 'required|integer|min:0',
             'deskripsi' => 'nullable|string',
-            'gambar' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'gambar_sub_1' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'gambar_sub_2' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'gambar_sub_3' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'gambar' => 'required|image|mimes:jpg,jpeg,png,webp',
+            'gambar_sub_1' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'gambar_sub_2' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'gambar_sub_3' => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'status' => 'required|string|in:tersedia,habis',
         ]);
 
@@ -136,10 +136,10 @@ class AdminMenuController extends Controller
             'harga' => 'required|numeric|min:0',
             'stok' => 'required|integer|min:0',
             'deskripsi' => 'nullable|string',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'gambar_sub_1' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'gambar_sub_2' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'gambar_sub_3' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'gambar_sub_1' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'gambar_sub_2' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'gambar_sub_3' => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'status' => 'required|string|in:tersedia,habis',
         ]);
 

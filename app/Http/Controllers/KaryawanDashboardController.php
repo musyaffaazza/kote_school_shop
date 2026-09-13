@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Menu;
 use App\Models\Pembayaran;
 use App\Models\Pesanan;
+use App\Models\User;
 use App\Services\StockService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -530,5 +531,67 @@ class KaryawanDashboardController extends Controller
         $message = $statusLabels[$validated['status']] ?? 'Status pesanan berhasil diperbarui!';
 
         return redirect()->route('karyawan.pesanan')->with('success', $message);
+    }
+
+    /**
+     * Tampilkan direktori data kontak pelanggan untuk staf karyawan (hanya email dan WA/telepon).
+     */
+    public function pengguna(Request $request): View
+    {
+        $search = trim($request->input('search', ''));
+        $filterStatus = $request->input('status', 'all');
+
+        // Query khusus pelanggan (kecuali admin & karyawan)
+        $query = User::whereNotIn('role', ['admin', 'karyawan'])
+            ->withCount('pesanan');
+
+        // Filter status pesanan (Aktif / Non-Aktif)
+        if ($filterStatus === 'aktif') {
+            $query->has('pesanan');
+        } elseif ($filterStatus === 'nonaktif') {
+            $query->doesntHave('pesanan');
+        }
+
+        // Filter pencarian (nama, email, no_hp, nis)
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('no_hp', 'like', "%{$search}%")
+                    ->orWhere('nis', 'like', "%{$search}%");
+            });
+        }
+
+        $pelangganList = $query->orderBy('id_user', 'desc')->paginate(10)->withQueryString();
+
+        // Hitung statistik untuk KPI Cards
+        $totalPelanggan = User::whereNotIn('role', ['admin', 'karyawan'])->count();
+        $pelangganAktif = User::whereNotIn('role', ['admin', 'karyawan'])->has('pesanan')->count();
+        $pelangganNonAktif = $totalPelanggan - $pelangganAktif;
+
+        // Pelanggan baru minggu ini (7 hari terakhir)
+        $pelangganBaruMingguIni = User::whereNotIn('role', ['admin', 'karyawan'])
+            ->where('created_at', '>=', now()->subDays(7))
+            ->count();
+
+        // Pesanan yang butuh konfirmasi/tindakan kasir
+        $pesananButuhKonfirmasi = Pesanan::whereIn('status_pesanan', ['diproses', 'sedang_dibuat'])->count();
+
+        // Pelanggan VIP / Frekuensi Belanja Tinggi (pesanan >= 3)
+        $pelangganVip = User::whereNotIn('role', ['admin', 'karyawan'])
+            ->has('pesanan', '>=', 3)
+            ->count();
+
+        return view('karyawan.pengguna', compact(
+            'pelangganList',
+            'search',
+            'filterStatus',
+            'totalPelanggan',
+            'pelangganAktif',
+            'pelangganNonAktif',
+            'pelangganBaruMingguIni',
+            'pesananButuhKonfirmasi',
+            'pelangganVip'
+        ));
     }
 }

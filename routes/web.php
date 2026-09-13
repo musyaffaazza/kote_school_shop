@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminLaporanKeuanganController;
 use App\Http\Controllers\AdminMenuController;
 use App\Http\Controllers\AdminMessageController;
 use App\Http\Controllers\AdminPembayaranController;
+use App\Http\Controllers\AdminPenggunaController;
 use App\Http\Controllers\AdminPromoController;
 use App\Http\Controllers\AdminUlasanController;
 use App\Http\Controllers\AuthController;
@@ -87,6 +88,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/menu', [KaryawanDashboardController::class, 'menu'])->name('menu');
         Route::post('/menu/{menu}/update-stock', [KaryawanDashboardController::class, 'updateMenuStock'])->name('menu.update-stock');
 
+        // Data Kontak Pelanggan (Staf Read-Only)
+        Route::get('/pengguna', [KaryawanDashboardController::class, 'pengguna'])->name('pengguna');
+
         // Karyawan Financial Reports (Laporan Keuangan) Routes
         Route::get('/laporan-keuangan', [AdminLaporanKeuanganController::class, 'index'])->name('laporan-keuangan.index');
         Route::get('/laporan-keuangan/export/pdf', [AdminLaporanKeuanganController::class, 'exportPdf'])->name('laporan-keuangan.export.pdf');
@@ -102,6 +106,10 @@ Route::middleware('auth')->group(function () {
         Route::delete('/messages/{message}', [AdminMessageController::class, 'destroy'])->name('messages.destroy');
         Route::resource('menu', AdminMenuController::class);
         Route::resource('karyawan', AdminKaryawanController::class);
+
+        // Admin Pengguna (Pelanggan) Routes
+        Route::get('/pengguna/export', [AdminPenggunaController::class, 'exportCsv'])->name('pengguna.export');
+        Route::resource('pengguna', AdminPenggunaController::class);
 
         // Admin Payment Routes
         Route::get('/pembayaran', [AdminPembayaranController::class, 'index'])->name('pembayaran.index');

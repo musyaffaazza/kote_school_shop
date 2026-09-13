@@ -80,7 +80,7 @@
                     </div>
 
                     {{-- Keterangan format --}}
-                    <p class="text-[10px] text-[#8f7664] font-semibold text-left">Format: JPG, PNG. Maks: 2MB per foto</p>
+                    <p class="text-[10px] text-[#8f7664] font-semibold text-left">Format: JPG, JPEG, PNG, WEBP</p>
 
                     @error('gambar')
                         <p class="text-xs text-red-500 font-semibold text-left mt-1">{{ $message }}</p>
