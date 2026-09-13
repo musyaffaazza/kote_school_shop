@@ -56,9 +56,9 @@
                         <img src="/images/about_students_group.jpg" alt="Students in cafe" class="h-full w-full object-cover" />
                     </div>
                     <!-- Overlapping badge -->
-                    <div class="absolute bottom-6 -left-4 bg-[#21140b] text-white px-6 py-5 rounded-2xl shadow-[0_15px_35px_rgba(33,20,11,0.32)] z-10 text-center border border-white/10 min-w-[130px]">
-                        <span class="block text-3xl font-extrabold leading-none text-[#ab7a55]">4+</span>
-                        <span class="block mt-1.5 text-[10px] font-bold uppercase tracking-widest text-[#d5c6b8] leading-tight">Varian Coffee</span>
+                    <div class="absolute bottom-4 sm:bottom-6 left-2 sm:-left-4 bg-[#21140b] text-white px-4 py-3 sm:px-6 sm:py-5 rounded-2xl shadow-[0_15px_35px_rgba(33,20,11,0.32)] z-10 text-center border border-white/10 min-w-[110px] sm:min-w-[130px]">
+                        <span class="block text-2xl sm:text-3xl font-extrabold leading-none text-[#ab7a55]">4+</span>
+                        <span class="block mt-1.5 text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-[#d5c6b8] leading-tight">Varian Coffee</span>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
     <div class="bg-[#f5eade]/50 border-y border-[#edd8cf]/60 shadow-[inset_0_12px_24px_rgba(33,20,11,0.03),inset_0_-12px_24px_rgba(33,20,11,0.03)] py-20 md:py-28">
         <section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             <!-- Visi Card -->
-            <div class="rounded-[2rem] border border-[#edd8cf]/60 bg-white p-8 sm:p-10 shadow-[0_15px_40px_rgba(33,20,11,0.04)] hover:shadow-[0_25px_65px_rgba(33,20,11,0.09)] transition-all duration-300 space-y-4">
+            <div class="rounded-2xl sm:rounded-[2rem] border border-[#edd8cf]/60 bg-white p-5 sm:p-8 lg:p-10 shadow-[0_15px_40px_rgba(33,20,11,0.04)] hover:shadow-[0_25px_65px_rgba(33,20,11,0.09)] transition-all duration-300 space-y-4">
                 <div class="flex h-12 w-12 items-center justify-center rounded-full bg-[#fbf1e8] text-[#a2785d] shadow-[0_6px_15px_rgba(162,120,93,0.06)] border border-[#edd8cf]/40">
                     <x-icons.eye class="h-6 w-6" />
                 </div>
@@ -80,7 +80,7 @@
             </div>
 
             <!-- Misi Card (Dark Theme) -->
-            <div class="rounded-[2rem] bg-[#21140b] p-8 sm:p-10 shadow-[0_20px_50px_rgba(33,20,11,0.18)] hover:shadow-[0_30px_70px_rgba(33,20,11,0.26)] transition-all duration-300 space-y-5 text-white border border-white/5">
+            <div class="rounded-2xl sm:rounded-[2rem] bg-[#21140b] p-5 sm:p-8 lg:p-10 shadow-[0_20px_50px_rgba(33,20,11,0.18)] hover:shadow-[0_30px_70px_rgba(33,20,11,0.26)] transition-all duration-300 space-y-5 text-white border border-white/5">
                 <div class="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-[#ab7a55] shadow-[0_6px_15px_rgba(0,0,0,0.15)]">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0 2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0 6.086.71l3.114-.732a48.524 48.524 0 0 1-5.64-1.655 9 9 0 0 0-6.208-.682L3 15Z" />
@@ -174,7 +174,7 @@
     {{-- SECTION 4: CALL TO ACTION (CTA) --}}
     <div class="pb-16 md:pb-24 bg-[#fbf1e8]">
         <section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-            <div class="rounded-[2.5rem] bg-[#21140b] p-10 sm:p-16 text-center space-y-6 shadow-[0_30px_70px_rgba(33,20,11,0.22)] relative overflow-hidden border border-white/5">
+            <div class="rounded-2xl sm:rounded-[2.5rem] bg-[#21140b] p-6 sm:p-10 lg:p-16 text-center space-y-6 shadow-[0_30px_70px_rgba(33,20,11,0.22)] relative overflow-hidden border border-white/5">
                 <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(171,122,85,0.15),transparent)]"></div>
                 <div class="relative z-10 space-y-4">
                     <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">

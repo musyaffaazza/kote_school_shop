@@ -1,9 +1,9 @@
 @extends('layouts.guest')
 
 @section('content')
-    <div class="flex min-h-[calc(100vh-12rem)] items-center justify-center bg-[#fbf1e8] px-4 py-8 sm:px-6 lg:px-8">
+    <div class="flex min-h-[calc(100dvh-12rem)] items-center justify-center bg-[#fbf1e8] px-4 py-8 sm:px-6 lg:px-8">
         <div class="w-full max-w-[420px]">
-            <div class="mx-auto w-full rounded-[2rem] border border-[#edd8cf]/60 bg-white p-8 sm:p-10 shadow-[0_20px_50px_rgba(33,20,11,0.06)]">
+            <div class="mx-auto w-full rounded-2xl sm:rounded-[2rem] border border-[#edd8cf]/60 bg-white p-6 sm:p-10 shadow-[0_20px_50px_rgba(33,20,11,0.06)]">
                 <div class="space-y-1.5 text-center">
                     <h1 class="text-2xl font-bold tracking-tight text-[#21140b] sm:text-3xl">Masuk ke Akun Anda</h1>
                     <p class="text-[11px] font-bold tracking-widest text-[#a2785d] uppercase">AKSES LAYANAN KOTE SCHOOL</p>

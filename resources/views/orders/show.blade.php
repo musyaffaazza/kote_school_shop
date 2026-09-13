@@ -489,7 +489,7 @@
         </div>
 
         {{-- WHITE DETAILS CARD --}}
-        <div class="max-w-md sm:max-w-lg mx-auto rounded-[2rem] bg-white border border-[#ede6df]/60 p-6 sm:p-8 shadow-[0_15px_40px_rgba(33,20,11,0.04)] mt-8">
+        <div class="max-w-md sm:max-w-lg mx-auto rounded-2xl sm:rounded-[2rem] bg-white border border-[#ede6df]/60 p-4 sm:p-6 lg:p-8 shadow-[0_15px_40px_rgba(33,20,11,0.04)] mt-8">
             {{-- ORDER NO / DATE ROW --}}
             <div class="flex items-center justify-between text-left">
                 <div>
@@ -592,7 +592,7 @@
         </div>
 
         {{-- ACTION BUTTONS --}}
-        <div class="flex flex-row items-center justify-center gap-3 max-w-md sm:max-w-lg mx-auto mt-8">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2.5 sm:gap-3 max-w-md sm:max-w-lg mx-auto mt-8">
             @if($isCompleted)
                 <a
                     href="{{ route('ulasan.create', $pesanan->id_pesanan) }}"

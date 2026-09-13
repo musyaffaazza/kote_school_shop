@@ -30,7 +30,7 @@
             {{-- LEFT COLUMN: ORDER SUMMARY (Span 5) --}}
             <div class="lg:col-span-5 space-y-6">
                 <!-- Order Summary Card -->
-                <div class="rounded-3xl bg-white border border-[#edd8cf]/60 p-6 shadow-[0_10px_30px_rgba(33,20,11,0.02)] space-y-6">
+                <div class="rounded-2xl sm:rounded-3xl bg-white border border-[#edd8cf]/60 p-4 sm:p-6 shadow-[0_10px_30px_rgba(33,20,11,0.02)] space-y-6">
                     <h2 class="text-base font-extrabold text-[#21140b] text-left">Ringkasan Pesanan</h2>
                     
                     <!-- Dynamic Cart Items List -->
@@ -53,7 +53,7 @@
 
                         <!-- Promo Code Apply -->
                         <div class="flex gap-2 pt-1.5">
-                            <input type="text" id="promo-input" placeholder="Masukkan kode promo" class="flex-1 min-h-[42px] px-4 rounded-xl border border-[#edd8cf] text-xs text-[#21140b] uppercase font-mono placeholder:font-sans placeholder:normal-case placeholder:text-[#b5a49a] focus:outline-none focus:ring-2 focus:ring-[#c5ab98]/30 transition-all" />
+                            <input type="text" id="promo-input" placeholder="Masukkan kode promo" class="flex-1 min-h-[42px] px-4 rounded-xl border border-[#edd8cf] text-base lg:text-xs text-[#21140b] uppercase font-mono placeholder:font-sans placeholder:normal-case placeholder:text-[#b5a49a] focus:outline-none focus:ring-2 focus:ring-[#c5ab98]/30 transition-all" />
                             <button type="button" id="apply-promo-btn" class="min-h-[42px] px-5 rounded-xl bg-[#21140b] text-white text-xs font-bold hover:bg-[#3d2a1f] active:scale-95 transition-all shadow-sm cursor-pointer whitespace-nowrap uppercase tracking-wider">
                                 Terapkan
                             </button>
@@ -80,7 +80,7 @@
                         <label for="order-note-input" class="text-xs font-bold text-[#21140b] flex items-center justify-between">
                             <span>Catatan Pesanan (Opsional)</span>
                         </label>
-                        <textarea id="order-note-input" rows="2" placeholder="Tambahkan catatan untuk pesanan Anda (contoh: Tolong sedotan dipisah)..." class="w-full px-4 py-2.5 rounded-2xl border border-[#edd8cf] bg-[#fbf1e8]/20 text-xs text-[#21140b] placeholder:text-[#b5a49a] focus:outline-none focus:ring-2 focus:ring-[#c5ab98]/30 transition-all resize-none"></textarea>
+                        <textarea id="order-note-input" rows="2" placeholder="Tambahkan catatan untuk pesanan Anda (contoh: Tolong sedotan dipisah)..." class="w-full px-4 py-2.5 rounded-2xl border border-[#edd8cf] bg-[#fbf1e8]/20 text-base lg:text-xs text-[#21140b] placeholder:text-[#b5a49a] focus:outline-none focus:ring-2 focus:ring-[#c5ab98]/30 transition-all resize-none"></textarea>
                     </div>
                 </div>
 
@@ -100,7 +100,7 @@
             {{-- RIGHT COLUMN: DELIVERY & PAYMENT METHOD (Span 7) --}}
             <div class="lg:col-span-7 space-y-6">
                 <!-- Fulfillment / Delivery Method Selection Card -->
-                <div class="rounded-3xl bg-white border border-[#edd8cf]/60 p-6 shadow-[0_10px_30px_rgba(33,20,11,0.02)] space-y-5 text-left">
+                <div class="rounded-2xl sm:rounded-3xl bg-white border border-[#edd8cf]/60 p-4 sm:p-6 shadow-[0_10px_30px_rgba(33,20,11,0.02)] space-y-5 text-left">
                     <div>
                         <h2 class="text-base font-extrabold text-[#21140b]">Pilihan Layanan</h2>
                         <p class="text-xs font-medium text-[#8f7664] mt-0.5">Pilih apakah pesanan diambil di tempat atau diantar ke lokasi Anda.</p>
@@ -170,13 +170,13 @@
                                 Lokasi / Alamat Pengantaran <span class="text-red-500">*</span>
                             </span>
                         </label>
-                        <textarea id="delivery-address-input" rows="2" placeholder="Tuliskan gedung, lantai, kelas, atau nomor ruangan (contoh: Gedung B Lantai 2, Ruang XII RPL 1)" class="w-full px-4 py-2.5 rounded-2xl border border-[#edd8cf] bg-[#fbf1e8]/20 text-xs text-[#21140b] placeholder:text-[#b5a49a] focus:outline-none focus:ring-2 focus:ring-[#c5ab98]/30 transition-all resize-none">{{ $prefillLocation }}</textarea>
+                        <textarea id="delivery-address-input" rows="2" placeholder="Tuliskan gedung, lantai, kelas, atau nomor ruangan (contoh: Gedung B Lantai 2, Ruang XII RPL 1)" class="w-full px-4 py-2.5 rounded-2xl border border-[#edd8cf] bg-[#fbf1e8]/20 text-base lg:text-xs text-[#21140b] placeholder:text-[#b5a49a] focus:outline-none focus:ring-2 focus:ring-[#c5ab98]/30 transition-all resize-none">{{ $prefillLocation }}</textarea>
                         <p id="delivery-address-error" class="text-[10px] text-red-500 font-bold hidden text-left"></p>
                     </div>
                 </div>
 
                 <!-- Payment Method Selection Card -->
-                <div class="rounded-3xl bg-white border border-[#edd8cf]/60 p-6 shadow-[0_10px_30px_rgba(33,20,11,0.02)] space-y-6">
+                <div class="rounded-2xl sm:rounded-3xl bg-white border border-[#edd8cf]/60 p-4 sm:p-6 shadow-[0_10px_30px_rgba(33,20,11,0.02)] space-y-6">
                     <h2 class="text-base font-extrabold text-[#21140b] text-left">Metode Pembayaran</h2>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

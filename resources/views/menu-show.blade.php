@@ -187,13 +187,13 @@
                 {{-- CATATAN --}}
                 <div class="space-y-3">
                     <p class="text-xs font-bold text-[#21140b] uppercase tracking-wider">Catatan</p>
-                    <textarea name="catatan" id="menu-catatan" rows="3" placeholder="Contoh: tidak pakai gula" class="w-full rounded-xl border border-[#edd8cf] bg-[#f4ece6]/40 px-4 py-3 text-sm text-[#21140b] placeholder:text-[#b5a49a] focus:outline-none focus:ring-2 focus:ring-[#c5ab98]/30 resize-none transition-all"></textarea>
+                    <textarea name="catatan" id="menu-catatan" rows="3" placeholder="Contoh: tidak pakai gula" class="w-full rounded-xl border border-[#edd8cf] bg-[#f4ece6]/40 px-4 py-3 text-base lg:text-sm text-[#21140b] placeholder:text-[#b5a49a] focus:outline-none focus:ring-2 focus:ring-[#c5ab98]/30 resize-none transition-all"></textarea>
                 </div>
 
                 {{-- QUANTITY + ADD TO CART --}}
-                <div class="flex items-center gap-4 rounded-3xl bg-white p-4 border border-[#edd8cf]/40 shadow-[0_15px_30px_rgba(33,20,11,0.05)]">
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 rounded-3xl bg-white p-4 border border-[#edd8cf]/40 shadow-[0_15px_30px_rgba(33,20,11,0.05)]">
                     {{-- Quantity Selector --}}
-                    <div class="flex items-center rounded-full border border-[#edd8cf] bg-[#fbf1e8]/30 px-2 py-1">
+                    <div class="flex items-center justify-center rounded-full border border-[#edd8cf] bg-[#fbf1e8]/30 px-2 py-1 shrink-0">
                         <button type="button" id="qty-minus" {{ $menu->isOutOfStock() ? 'disabled' : '' }} class="flex h-10 w-10 items-center justify-center text-lg font-bold text-[#4a3d35] hover:bg-[#fbf1e8] rounded-full transition-colors cursor-pointer select-none disabled:opacity-40 disabled:cursor-not-allowed">
                             −
                         </button>

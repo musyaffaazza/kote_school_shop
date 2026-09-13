@@ -660,7 +660,7 @@
 </div>
 
 {{-- MODAL: BALAS ULASAN --}}
-<div id="reply-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true">
+<div id="reply-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] hidden" role="dialog" aria-modal="true">
     <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onclick="closeReplyModal()"></div>
     <div class="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl border border-[#ede6df] space-y-4 text-left">
         <div class="flex items-center justify-between pb-3 border-b border-[#f2ebe3]">
@@ -717,7 +717,7 @@
 </div>
 
 {{-- MODAL: HAPUS ULASAN --}}
-<div id="delete-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true">
+<div id="delete-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] hidden" role="dialog" aria-modal="true">
     <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onclick="closeDeleteModal()"></div>
     <div class="relative w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-xl border border-[#ede6df] space-y-4">
         <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-50 text-red-500 border border-red-100">

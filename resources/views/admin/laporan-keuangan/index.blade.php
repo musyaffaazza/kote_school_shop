@@ -491,7 +491,7 @@
 {{-- ============================================ --}}
 {{-- MODAL: CATAT PENGELUARAN BARU                --}}
 {{-- ============================================ --}}
-<div id="modal-catat-pengeluaran" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true">
+<div id="modal-catat-pengeluaran" class="fixed inset-0 z-50 flex items-center justify-center p-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] hidden" role="dialog" aria-modal="true">
     <div class="absolute inset-0 bg-black/50 backdrop-blur-xs transition-opacity" onclick="closeModal('modal-catat-pengeluaran')"></div>
 
     <div class="relative w-full max-w-lg rounded-2xl bg-white shadow-2xl overflow-hidden border border-[#ede6df]">
@@ -575,7 +575,7 @@
 {{-- ============================================ --}}
 {{-- MODAL: EDIT PENGELUARAN                      --}}
 {{-- ============================================ --}}
-<div id="modal-edit-pengeluaran" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true">
+<div id="modal-edit-pengeluaran" class="fixed inset-0 z-50 flex items-center justify-center p-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] hidden" role="dialog" aria-modal="true">
     <div class="absolute inset-0 bg-black/50 backdrop-blur-xs transition-opacity" onclick="closeModal('modal-edit-pengeluaran')"></div>
 
     <div class="relative w-full max-w-lg rounded-2xl bg-white shadow-2xl overflow-hidden border border-[#ede6df]">
@@ -661,10 +661,10 @@
 {{-- ============================================ --}}
 {{-- MODAL: KELOLA & DETAIL DAFTAR PENGELUARAN    --}}
 {{-- ============================================ --}}
-<div id="modal-kelola-pengeluaran" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true">
+<div id="modal-kelola-pengeluaran" class="fixed inset-0 z-50 flex items-center justify-center p-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] hidden" role="dialog" aria-modal="true">
     <div class="absolute inset-0 bg-black/50 backdrop-blur-xs transition-opacity" onclick="closeModal('modal-kelola-pengeluaran')"></div>
 
-    <div class="relative w-full max-w-4xl rounded-2xl bg-white shadow-2xl overflow-hidden border border-[#ede6df] max-h-[88vh] flex flex-col">
+    <div class="relative w-full max-w-4xl rounded-2xl bg-white shadow-2xl overflow-hidden border border-[#ede6df] max-h-[88dvh] flex flex-col">
         {{-- Header --}}
         <div class="flex items-center justify-between border-b border-[#f0ebe5] px-6 py-4 bg-[#faf7f2]">
             <div class="flex items-center gap-2.5">
@@ -771,10 +771,10 @@
 {{-- ============================================ --}}
 {{-- MODAL: LIHAT SEMUA TRANSAKSI PENJUALAN       --}}
 {{-- ============================================ --}}
-<div id="modal-semua-transaksi" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true">
+<div id="modal-semua-transaksi" class="fixed inset-0 z-50 flex items-center justify-center p-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] hidden" role="dialog" aria-modal="true">
     <div class="absolute inset-0 bg-black/50 backdrop-blur-xs transition-opacity" onclick="closeModal('modal-semua-transaksi')"></div>
 
-    <div class="relative w-full max-w-4xl rounded-2xl bg-white shadow-2xl overflow-hidden border border-[#ede6df] max-h-[88vh] flex flex-col">
+    <div class="relative w-full max-w-4xl rounded-2xl bg-white shadow-2xl overflow-hidden border border-[#ede6df] max-h-[88dvh] flex flex-col">
         {{-- Header --}}
         <div class="flex items-center justify-between border-b border-[#f0ebe5] px-6 py-4 bg-[#faf7f2]">
             <div class="flex items-center gap-2.5">

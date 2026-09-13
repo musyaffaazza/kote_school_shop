@@ -17,7 +17,7 @@
         {{-- LEFT COLUMN: CONTACT INFO & BARISTA CARD (SPAN 5) --}}
         <div class="md:col-span-5 space-y-6">
             {{-- Contact Info Card --}}
-            <div class="rounded-3xl border border-[#edd8cf]/60 bg-[#fdfaf7] p-6 sm:p-8 shadow-[0_10px_35px_rgba(33,20,11,0.02)] space-y-6">
+            <div class="rounded-2xl sm:rounded-3xl border border-[#edd8cf]/60 bg-[#fdfaf7] p-5 sm:p-8 shadow-[0_10px_35px_rgba(33,20,11,0.02)] space-y-6">
                 <h3 class="text-lg font-bold text-[#21140b] border-b border-[#edd8cf]/40 pb-3">
                     Informasi Kontak
                 </h3>
@@ -87,7 +87,7 @@
             </div>
 
             {{-- Quality Brewed for You Image Card --}}
-            <div class="relative w-full aspect-[16/10] overflow-hidden rounded-3xl border border-[#edd8cf]/80 shadow-[0_15px_45px_rgba(33,20,11,0.06)] group">
+            <div class="relative w-full aspect-[16/10] overflow-hidden rounded-2xl sm:rounded-3xl border border-[#edd8cf]/80 shadow-[0_15px_45px_rgba(33,20,11,0.06)] group">
                 <img src="/images/contact_card.jpg" alt="Student brewing coffee" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 <div class="absolute inset-0 bg-[#21140b]/35 flex items-center justify-center">
                     <span class="text-white font-extrabold text-base sm:text-lg tracking-wide drop-shadow-md">
@@ -99,7 +99,7 @@
 
         {{-- RIGHT COLUMN: CONTACT FORM (SPAN 7) --}}
         <div class="md:col-span-7">
-            <div class="rounded-3xl border border-[#edd8cf]/60 bg-white p-6 sm:p-8 shadow-[0_15px_45px_rgba(33,20,11,0.04)]">
+            <div class="rounded-2xl sm:rounded-3xl border border-[#edd8cf]/60 bg-white p-5 sm:p-8 shadow-[0_15px_45px_rgba(33,20,11,0.04)]">
                 <form action="{{ route('contact.submit') }}" method="POST" class="space-y-5">
                     @csrf
                     
@@ -108,13 +108,13 @@
                         {{-- Nama --}}
                         <div class="space-y-1 text-left">
                             <label for="nama" class="block text-[10px] font-bold text-[#8f7664] uppercase tracking-wider">Nama Lengkap</label>
-                            <input type="text" id="nama" name="nama" placeholder="Masukkan nama Anda" class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-xs font-bold rounded-xl px-4 py-3.5 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all" required />
+                            <input type="text" id="nama" name="nama" placeholder="Masukkan nama Anda" class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-base lg:text-xs font-bold rounded-xl px-4 py-3.5 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all" required />
                         </div>
                         
                         {{-- Email --}}
                         <div class="space-y-1 text-left">
                             <label for="email" class="block text-[10px] font-bold text-[#8f7664] uppercase tracking-wider">Email</label>
-                            <input type="email" id="email" name="email" placeholder="email@contoh.com" class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-xs font-bold rounded-xl px-4 py-3.5 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all" required />
+                            <input type="email" id="email" name="email" placeholder="email@contoh.com" class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-base lg:text-xs font-bold rounded-xl px-4 py-3.5 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all" required />
                         </div>
                     </div>
 
@@ -122,7 +122,7 @@
                     <div class="space-y-1 text-left">
                         <label for="subjek" class="block text-[10px] font-bold text-[#8f7664] uppercase tracking-wider">Subjek</label>
                         <div class="relative">
-                            <select id="subjek" name="subjek" class="w-full appearance-none bg-[#fdfaf7] border border-[#e8dfd5] text-xs font-bold rounded-xl px-4 py-3.5 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all cursor-pointer" required>
+                            <select id="subjek" name="subjek" class="w-full appearance-none bg-[#fdfaf7] border border-[#e8dfd5] text-base lg:text-xs font-bold rounded-xl px-4 py-3.5 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all cursor-pointer" required>
                                 <option value="Saran / Masukan">Saran / Masukan</option>
                                 <option value="Kerja Sama">Kerja Sama</option>
                             </select>
@@ -137,7 +137,7 @@
                     {{-- Pesan Anda --}}
                     <div class="space-y-1 text-left">
                         <label for="pesan" class="block text-[10px] font-bold text-[#8f7664] uppercase tracking-wider">Pesan Anda</label>
-                        <textarea id="pesan" name="pesan" rows="5" placeholder="Ceritakan kebutuhan Anda..." class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-xs font-bold rounded-xl px-4 py-3.5 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all resize-none" required></textarea>
+                        <textarea id="pesan" name="pesan" rows="5" placeholder="Ceritakan kebutuhan Anda..." class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-base lg:text-xs font-bold rounded-xl px-4 py-3.5 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all resize-none" required></textarea>
                     </div>
 
                     {{-- Submit Button --}}
@@ -153,7 +153,7 @@
     </div>
 
     {{-- INTERACTIVE MAP SECTION --}}
-    <div class="rounded-3xl border border-[#edd8cf]/60 bg-[#fdfaf7] p-5 sm:p-6 shadow-[0_15px_45px_rgba(33,20,11,0.02)] space-y-4">
+    <div class="rounded-2xl sm:rounded-3xl border border-[#edd8cf]/60 bg-[#fdfaf7] p-4 sm:p-6 shadow-[0_15px_45px_rgba(33,20,11,0.02)] space-y-4">
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-2 text-[#21140b]">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5 text-[#a2785d]">

@@ -5,7 +5,8 @@
         position: absolute;
         top: calc(100% + 8px);
         right: 0;
-        width: 340px;
+        width: min(340px, calc(100vw - 2rem));
+        max-width: calc(100vw - 2rem);
         background: white;
         border: 1px solid #edd8cf;
         border-radius: 1rem;
@@ -20,17 +21,22 @@
         background: transparent;
         border: none;
         outline: none;
-        font-size: 0.8rem;
+        font-size: 16px;
         font-weight: 500;
         color: #21140b;
         width: 100%;
+    }
+    @media (min-width: 1024px) {
+        #search-popup input {
+            font-size: 0.8rem;
+        }
     }
     #search-popup input::placeholder {
         color: #b5a49a;
     }
 </style>
 
-<header class="sticky top-0 z-40 bg-[#fcfaf7]/95 backdrop-blur-md border-b border-[#f3ece4] shadow-[0_4px_20px_rgba(33,20,11,0.03)] transition-all">
+<header class="sticky top-0 z-40 bg-[#fcfaf7]/95 backdrop-blur-md border-b border-[#f3ece4] shadow-[0_4px_20px_rgba(33,20,11,0.03)] transition-all pt-[env(safe-area-inset-top)]">
 
 
     <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-10">
@@ -92,13 +98,13 @@
             </a>
 
             @guest
-                <a id="masuk-btn" href="{{ route('login') }}" class="inline-flex items-center gap-2 rounded-full bg-[#21140b] px-5 py-2 text-xs font-bold text-white shadow-sm hover:bg-[#3d2a1f] transition-all uppercase tracking-wider ml-1">
+                <a id="masuk-btn" href="{{ route('login') }}" class="hidden lg:inline-flex items-center gap-2 rounded-full bg-[#21140b] px-5 py-2 text-xs font-bold text-white shadow-sm hover:bg-[#3d2a1f] transition-all uppercase tracking-wider ml-1">
                     Masuk
                 </a>
             @endguest
 
             @auth
-                <div class="relative ml-1 pl-3 border-l border-[#e7d7ce]">
+                <div class="hidden lg:block relative ml-1 pl-3 border-l border-[#e7d7ce]">
                     <button type="button" id="user-menu-button" class="flex items-center gap-2 rounded-full py-1 px-2.5 hover:bg-[#f4e6da]/70 transition-all cursor-pointer focus:outline-none">
                         <div class="flex h-8 w-8 items-center justify-center rounded-full bg-[#21140b] text-xs font-bold text-white uppercase shadow-sm">
                             {{ substr(Auth::user()->nama, 0, 1) }}
@@ -163,20 +169,20 @@
                 </div>
             @endauth
 
-            <!-- Hamburger (mobile only, shown via JS) -->
-            <button id="mobile-menu-button" type="button" aria-label="Menu" class="p-2 rounded-lg text-[#21140b] hover:bg-[#f4e6da]/60 transition-colors cursor-pointer" style="display:none;">
+            <!-- Hamburger (mobile only, visible via CSS lg:hidden) -->
+            <button id="mobile-menu-button" type="button" aria-label="Menu" class="flex lg:hidden p-2 rounded-lg text-[#21140b] hover:bg-[#f4e6da]/60 transition-colors cursor-pointer">
                 <svg id="icon-hamburger" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="h-5 w-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
-                <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="h-5 w-5" style="display:none;">
+                <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="h-5 w-5 hidden">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
             </button>
         </div>
     </div>
 
-    <!-- Mobile nav -->
-    <nav id="mobile-nav" style="display:none;" class="border-t border-[#f3ece4]/60 bg-[#fcfaf7] px-4 py-3 space-y-1">
+    <!-- Mobile nav (default hidden, toggled via JS class) -->
+    <nav id="mobile-nav" class="hidden lg:hidden border-t border-[#f3ece4]/60 bg-[#fcfaf7] px-4 py-3 space-y-1">
         <a href="{{ route('home') }}" class="block rounded-lg px-3 py-2 text-sm transition-colors {{ request()->routeIs('home') ? 'font-semibold text-[#21140b] bg-[#f4e6da]/50' : 'font-normal text-[#4a3d35] hover:bg-[#f4e6da]/50' }}">Beranda</a>
         <a href="{{ route('menu') }}" class="block rounded-lg px-3 py-2 text-sm transition-colors {{ request()->routeIs('menu') ? 'font-semibold text-[#21140b] bg-[#f4e6da]/50' : 'font-normal text-[#4a3d35] hover:bg-[#f4e6da]/50' }}">Menu</a>
         <a href="{{ route('promo') }}" class="block rounded-lg px-3 py-2 text-sm transition-colors {{ request()->routeIs('promo') ? 'font-semibold text-[#21140b] bg-[#f4e6da]/50' : 'font-normal text-[#4a3d35] hover:bg-[#f4e6da]/50' }}">Promo</a>
@@ -190,15 +196,51 @@
             </div>
         @endguest
         @auth
-            <div class="pt-2 border-t border-[#f3ece4]/60 space-y-1">
+            <div class="pt-3 pb-1 border-t border-[#f3ece4]/60 space-y-1">
+                <!-- Info Akun Mobile Card -->
+                <div class="flex items-center gap-3 px-3 py-2.5 mb-2 rounded-xl bg-[#fbf1e8]/80 border border-[#edd8cf]">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#21140b] text-xs font-bold text-white uppercase shadow-sm">
+                        {{ substr(Auth::user()->nama, 0, 1) }}
+                    </div>
+                    <div class="flex flex-col min-w-0">
+                        <span class="text-sm font-bold text-[#21140b] truncate">{{ Auth::user()->nama }}</span>
+                        <span class="text-[11px] text-[#8f7664] truncate">{{ Auth::user()->email }}</span>
+                        <span class="mt-0.5 inline-block text-[10px] font-bold text-[#a2785d] capitalize">
+                            Peran: {{ Auth::user()->role }}
+                        </span>
+                    </div>
+                </div>
+
                 @if(auth()->user()->role === 'admin')
-                    <a href="{{ route('admin.dashboard') }}" class="block rounded-lg px-3 py-2 text-sm font-semibold text-[#a2785d] hover:bg-[#f4e6da]/50">Dashboard Admin</a>
+                    <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-semibold text-[#a2785d] hover:bg-[#f4e6da]/50">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="h-4 w-4 text-[#ab7a55]">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
+                        </svg>
+                        Dashboard Admin
+                    </a>
                 @elseif(auth()->user()->role === 'karyawan')
-                    <a href="{{ route('karyawan.dashboard') }}" class="block rounded-lg px-3 py-2 text-sm font-semibold text-[#a2785d] hover:bg-[#f4e6da]/50">Dashboard Karyawan</a>
+                    <a href="{{ route('karyawan.dashboard') }}" class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-semibold text-[#a2785d] hover:bg-[#f4e6da]/50">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="h-4 w-4 text-[#ab7a55]">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
+                        </svg>
+                        Dashboard Karyawan
+                    </a>
                 @endif
-                <a href="{{ route('profile') }}" class="block rounded-lg px-3 py-2 text-sm font-medium text-[#4a3d35] hover:bg-[#f4e6da]/50">Profil Saya</a>
-                <a href="{{ route('orders.index') }}" class="block rounded-lg px-3 py-2 text-sm font-medium text-[#4a3d35] hover:bg-[#f4e6da]/50">Riwayat Pesanan</a>
-                <button type="button" onclick="openLogoutModal()" class="w-full text-left flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors cursor-pointer">
+                <a href="{{ route('profile') }}" class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-[#4a3d35] hover:bg-[#f4e6da]/50">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="h-4 w-4 text-[#8f7664]">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                    Profil Saya
+                </a>
+                <a href="{{ route('orders.index') }}" class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-[#4a3d35] hover:bg-[#f4e6da]/50">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="h-4 w-4 text-[#8f7664]">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    Riwayat Pesanan
+                </a>
+                <button type="button" onclick="openLogoutModal()" class="w-full text-left flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="h-4 w-4 text-red-500">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
                     </svg>
@@ -206,51 +248,23 @@
                 </button>
             </div>
         @endauth
+    </nav>
 </header>
 
 <script>
 (function () {
-    var LG = 1024;
-
-    /* ── Responsive show/hide ── */
-    function applyResponsive() {
-        var isMobile = window.innerWidth < LG;
-        var masukBtn = document.getElementById('masuk-btn');
-        var hamburger = document.getElementById('mobile-menu-button');
-        if (masukBtn)  masukBtn.style.display  = isMobile ? 'none' : 'inline-flex';
-        if (hamburger) hamburger.style.display = isMobile ? 'inline-flex' : 'none';
-        if (!isMobile) {
-            var nav = document.getElementById('mobile-nav');
-            if (nav) nav.style.display = 'none';
-            resetHamburgerIcon();
-        }
-    }
-
-    function resetHamburgerIcon() {
-        var h = document.getElementById('icon-hamburger');
-        var c = document.getElementById('icon-close');
-        if (h) h.style.display = '';
-        if (c) c.style.display = 'none';
-    }
-
-    applyResponsive();
-    window.addEventListener('resize', applyResponsive);
-
     document.addEventListener('DOMContentLoaded', function () {
-
         /* ── Mobile menu ── */
         var mobileBtn = document.getElementById('mobile-menu-button');
         var mobileNav = document.getElementById('mobile-nav');
         var iconH     = document.getElementById('icon-hamburger');
         var iconC     = document.getElementById('icon-close');
-        var navOpen   = false;
 
         if (mobileBtn && mobileNav) {
             mobileBtn.addEventListener('click', function () {
-                navOpen = !navOpen;
-                mobileNav.style.display = navOpen ? 'block' : 'none';
-                if (iconH) iconH.style.display = navOpen ? 'none' : '';
-                if (iconC) iconC.style.display = navOpen ? '' : 'none';
+                var isHidden = mobileNav.classList.toggle('hidden');
+                if (iconH) iconH.classList.toggle('hidden', !isHidden);
+                if (iconC) iconC.classList.toggle('hidden', isHidden);
             });
         }
 

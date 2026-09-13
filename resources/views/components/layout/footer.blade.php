@@ -1,5 +1,5 @@
 <footer class="bg-[#ebe3db] border-t border-[#dfd6ce]/60 text-[#4f4136]">
-    <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-10">
+    <div class="mx-auto max-w-7xl px-4 pt-12 pb-[max(3rem,calc(3rem+env(safe-area-inset-bottom)))] sm:px-6 sm:py-12 lg:px-10 lg:py-12">
         <div class="flex flex-col md:flex-row gap-10 md:gap-12 lg:gap-16 items-start">
 
             <!-- Brand -->

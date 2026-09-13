@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="w-full min-h-[calc(100vh-200px)] py-10 sm:py-16 md:py-20 flex items-center justify-center px-4 sm:px-6">
+<div class="w-full min-h-[calc(100dvh-200px)] py-10 sm:py-16 md:py-20 flex items-center justify-center px-4 sm:px-6">
     <div class="w-full max-w-md bg-white rounded-3xl sm:rounded-[2rem] border border-[#edd8cf]/60 shadow-[0_10px_35px_rgba(33,20,11,0.04)] p-6 sm:p-10 text-center">
 
         {{-- ALREADY REVIEWED STATE --}}
@@ -103,7 +103,7 @@
                         rows="4"
                         placeholder="Ceritakan pengalamanmu..."
                         required
-                        class="w-full px-4 py-3.5 rounded-2xl border border-[#edd8cf] bg-[#faf5f0] text-xs sm:text-sm text-[#21140b] placeholder:text-[#b5a49a] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#a2785d]/30 focus:border-[#a2785d] transition-all resize-none shadow-2xs"
+                        class="w-full px-4 py-3.5 rounded-2xl border border-[#edd8cf] bg-[#faf5f0] text-base lg:text-sm text-[#21140b] placeholder:text-[#b5a49a] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#a2785d]/30 focus:border-[#a2785d] transition-all resize-none shadow-2xs"
                     >{{ old('komentar') }}</textarea>
                     @error('komentar')
                         <p class="text-xs text-red-600 font-semibold">{{ $message }}</p>

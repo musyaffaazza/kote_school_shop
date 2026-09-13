@@ -22,7 +22,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                         </svg>
                     </div>
-                    <input type="text" id="menu-search-input" placeholder="Cari menu..." class="w-full min-h-[50px] pl-11 pr-4 rounded-xl bg-white border border-[#edd8cf] text-sm text-[#21140b] placeholder:text-[#b5a49a] placeholder:font-medium focus:outline-none focus:ring-2 focus:ring-[#c5ab98]/30 shadow-none transition-all" />
+                    <input type="text" id="menu-search-input" placeholder="Cari menu..." class="w-full min-h-[50px] pl-11 pr-4 rounded-xl bg-white border border-[#edd8cf] text-base lg:text-sm text-[#21140b] placeholder:text-[#b5a49a] placeholder:font-medium focus:outline-none focus:ring-2 focus:ring-[#c5ab98]/30 shadow-none transition-all" />
                 </div>
                 <button type="button" id="menu-search-btn" class="min-h-[50px] px-6 rounded-xl bg-[#21140b] text-white text-sm font-bold flex items-center gap-2 hover:bg-[#3d2a1f] active:scale-95 transition-all shadow-md cursor-pointer whitespace-nowrap uppercase tracking-wider">
                     Cari
@@ -32,7 +32,7 @@
             <div class="flex gap-3 w-full md:w-auto">
                 <!-- Dropdown Category -->
                 <div class="relative w-full md:w-56">
-                    <select id="menu-category-select" class="w-full min-h-[50px] pl-4 pr-10 rounded-xl bg-white border border-[#edd8cf] text-sm text-[#21140b] font-semibold appearance-none focus:outline-none focus:ring-2 focus:ring-[#c5ab98]/30 shadow-none cursor-pointer transition-all">
+                    <select id="menu-category-select" class="w-full min-h-[50px] pl-4 pr-10 rounded-xl bg-white border border-[#edd8cf] text-base lg:text-sm text-[#21140b] font-semibold appearance-none focus:outline-none focus:ring-2 focus:ring-[#c5ab98]/30 shadow-none cursor-pointer transition-all">
                         <option value="semua">Semua Kategori</option>
                         <option value="Coffee">Coffee</option>
                         <option value="Non Coffee">Non Coffee</option>
@@ -84,7 +84,7 @@
 
     {{-- MENU GRID SECTION --}}
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 py-8">
-        <div id="menu-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div id="menu-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             @forelse($menus as $menu)
                 <div data-menu-card 
                      data-menu-name="{{ strtolower($menu->nama_menu) }}" 

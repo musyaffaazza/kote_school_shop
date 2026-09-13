@@ -45,7 +45,7 @@
 
             {{-- Right column: Order Summary (Span 4) --}}
             <div class="lg:col-span-4">
-                <div class="rounded-3xl bg-[#fbf1e8]/60 border border-[#edd8cf]/80 p-6 space-y-6 shadow-sm">
+                <div class="rounded-2xl sm:rounded-3xl bg-[#fbf1e8]/60 border border-[#edd8cf]/80 p-5 sm:p-6 space-y-6 shadow-sm">
                     <h2 class="text-base font-extrabold text-[#21140b] text-left">Ringkasan Pesanan</h2>
                     
                     <div class="space-y-4 text-xs font-bold text-[#21140b]">
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const optionsText = optionsList.join(" | ") || "Tanpa Kustomisasi";
 
             const itemEl = document.createElement('div');
-            itemEl.className = 'relative flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 bg-white border border-[#edd8cf]/50 rounded-[1.75rem] shadow-[0_8px_30px_rgba(33,20,11,0.02)] transition-all duration-300 hover:shadow-[0_15px_35px_rgba(33,20,11,0.06)] hover:-translate-y-0.5';
+            itemEl.className = 'relative flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-5 bg-white border border-[#edd8cf]/50 rounded-2xl sm:rounded-[1.75rem] shadow-[0_8px_30px_rgba(33,20,11,0.02)] transition-all duration-300 hover:shadow-[0_15px_35px_rgba(33,20,11,0.06)] hover:-translate-y-0.5';
             
             itemEl.innerHTML = `
                 <!-- Top section: Image & Product info -->

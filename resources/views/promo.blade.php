@@ -32,15 +32,15 @@
                     $imageUrl = $promo->gambar ? asset($promo->gambar) : '/images/Promo/SemesterBaru.jpeg';
                 @endphp
 
-                <div class="flex flex-col sm:flex-row overflow-hidden rounded-[1.5rem] border border-[#edd8cf]/60 bg-white shadow-[0_8px_30px_rgba(33,20,11,0.03)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(33,20,11,0.06)]">
+                <div class="flex flex-col sm:flex-row overflow-hidden rounded-2xl sm:rounded-[1.5rem] border border-[#edd8cf]/60 bg-white shadow-[0_8px_30px_rgba(33,20,11,0.03)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(33,20,11,0.06)]">
                     
-                    <!-- Left Image (1:1 Aspect Ratio) -->
-                    <div class="w-full sm:w-1/3 aspect-square relative overflow-hidden bg-[#fbf1e8] shrink-0">
+                    <!-- Left Image (16:9 on mobile, 1:1 on tablet/desktop) -->
+                    <div class="w-full sm:w-1/3 aspect-[16/9] sm:aspect-square relative overflow-hidden bg-[#fbf1e8] shrink-0">
                         <img src="{{ $imageUrl }}" alt="{{ $promo->nama_promo }}" class="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
                     </div>
 
                     <!-- Right Content -->
-                    <div class="p-6 flex-1 flex flex-col justify-between text-left space-y-4">
+                    <div class="p-4 sm:p-6 flex-1 flex flex-col justify-between text-left space-y-4">
                         <div class="space-y-2">
                             <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#ab7a55]">
                                 {{ $promo->jenis_label }}

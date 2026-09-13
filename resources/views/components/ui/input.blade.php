@@ -11,7 +11,7 @@
             type="{{ $type ?? 'text' }}"
             value="{{ $value ?? old($name) }}"
             placeholder="{{ $placeholder ?? '' }}"
-            {{ $attributes->merge(['class' => trim((isset($icon) ? 'pl-11 ':'').' '.(isset($rightIcon) ? 'pr-11 ':'').' min-h-[48px] w-full rounded-xl border border-[#e7d7ce] bg-[#fbf1e8] px-4 py-3 text-sm text-[#21140b] placeholder:text-[#b79f8d] shadow-sm transition focus:border-[#c5ab98] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#c5ab98]/20')]) }}
+            {{ $attributes->merge(['class' => trim((isset($icon) ? 'pl-11 ':'').' '.(isset($rightIcon) ? 'pr-11 ':'').' min-h-[48px] w-full rounded-xl border border-[#e7d7ce] bg-[#fbf1e8] px-4 py-3 text-base lg:text-sm text-[#21140b] placeholder:text-[#b79f8d] shadow-sm transition focus:border-[#c5ab98] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#c5ab98]/20')]) }}
         />
 
         @isset($rightIcon)

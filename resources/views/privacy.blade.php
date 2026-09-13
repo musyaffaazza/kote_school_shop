@@ -6,7 +6,7 @@
     <div class="mx-auto max-w-4xl px-4 sm:px-6">
 
         {{-- MAIN CARD CONTAINER --}}
-        <div class="rounded-[2.5rem] border border-[#edd8cf]/80 bg-white p-6 sm:p-10 md:p-12 shadow-[0_20px_50px_rgba(33,20,11,0.03)] space-y-12 sm:space-y-14">
+        <div class="rounded-2xl sm:rounded-[2.5rem] border border-[#edd8cf]/80 bg-white p-5 sm:p-8 md:p-12 shadow-[0_20px_50px_rgba(33,20,11,0.03)] space-y-12 sm:space-y-14">
 
             {{-- HEADER AREA --}}
             <div class="space-y-6">

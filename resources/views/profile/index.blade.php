@@ -40,19 +40,19 @@
                     {{-- Nama Lengkap --}}
                     <div class="space-y-1">
                         <label for="nama" class="block text-[10px] font-bold text-[#8f7664] uppercase tracking-wider">Nama Lengkap</label>
-                        <input type="text" id="nama" name="nama" value="{{ old('nama', $user->nama) }}" class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-xs font-bold rounded-xl px-4 py-3 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all" required />
+                        <input type="text" id="nama" name="nama" value="{{ old('nama', $user->nama) }}" class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-base lg:text-xs font-bold rounded-xl px-4 py-3 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all" required />
                     </div>
 
                     {{-- Alamat Email --}}
                     <div class="space-y-1">
                         <label for="email" class="block text-[10px] font-bold text-[#8f7664] uppercase tracking-wider">Alamat Email</label>
-                        <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-xs font-bold rounded-xl px-4 py-3 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all" required />
+                        <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-base lg:text-xs font-bold rounded-xl px-4 py-3 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all" required />
                     </div>
 
                     {{-- Nomor WhatsApp --}}
                     <div class="space-y-1">
                         <label for="no_hp" class="block text-[10px] font-bold text-[#8f7664] uppercase tracking-wider">Nomor WhatsApp</label>
-                        <input type="text" id="no_hp" name="no_hp" value="{{ old('no_hp', $user->no_hp) }}" class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-xs font-bold rounded-xl px-4 py-3 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all" required />
+                        <input type="text" id="no_hp" name="no_hp" value="{{ old('no_hp', $user->no_hp) }}" class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-base lg:text-xs font-bold rounded-xl px-4 py-3 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all" required />
                     </div>
                 </div>
             </div>
@@ -125,7 +125,7 @@
 </div>
 
 {{-- MODAL UBAH PASSWORD --}}
-<div id="modal-ubah-password" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true">
+<div id="modal-ubah-password" class="fixed inset-0 z-50 flex items-center justify-center p-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] hidden" role="dialog" aria-modal="true">
     {{-- Backdrop --}}
     <div class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" onclick="closePasswordModal()"></div>
 
@@ -147,19 +147,19 @@
             {{-- Password Lama --}}
             <div class="space-y-1">
                 <label for="password_lama" class="block text-[10px] font-bold text-[#8f7664] uppercase tracking-wider">Password Lama</label>
-                <input type="password" id="password_lama" name="password_lama" class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-xs font-bold rounded-xl px-4 py-2.5 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all" required />
+                <input type="password" id="password_lama" name="password_lama" class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-base lg:text-xs font-bold rounded-xl px-4 py-2.5 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all" required />
             </div>
 
             {{-- Password Baru --}}
             <div class="space-y-1">
                 <label for="password" class="block text-[10px] font-bold text-[#8f7664] uppercase tracking-wider">Password Baru</label>
-                <input type="password" id="password" name="password" class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-xs font-bold rounded-xl px-4 py-2.5 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all" required />
+                <input type="password" id="password" name="password" class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-base lg:text-xs font-bold rounded-xl px-4 py-2.5 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all" required />
             </div>
 
             {{-- Konfirmasi Password Baru --}}
             <div class="space-y-1">
                 <label for="password_confirmation" class="block text-[10px] font-bold text-[#8f7664] uppercase tracking-wider">Konfirmasi Password Baru</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-xs font-bold rounded-xl px-4 py-2.5 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all" required />
+                <input type="password" id="password_confirmation" name="password_confirmation" class="w-full bg-[#fdfaf7] border border-[#e8dfd5] text-base lg:text-xs font-bold rounded-xl px-4 py-2.5 text-[#21140b] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3d2a1f]/20 focus:border-[#3d2a1f] transition-all" required />
             </div>
 
             {{-- Actions --}}

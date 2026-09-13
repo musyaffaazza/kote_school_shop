@@ -38,7 +38,7 @@
 
         {{-- FEATURES BAR (4 PILLARS) --}}
         <section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-            <div class="rounded-[2rem] border border-[#edd8cf]/60 bg-[#fbf1e8]/70 p-6 sm:p-8 shadow-sm">
+            <div class="rounded-2xl sm:rounded-[2rem] border border-[#edd8cf]/60 bg-[#fbf1e8]/70 p-4 sm:p-8 shadow-sm">
                 <div class="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-4">
                     <!-- Pillar 1 -->
                     <div class="flex flex-col items-center space-y-3 text-center">
@@ -144,7 +144,7 @@
     {{-- ULASAN SECTION (Cream Background) --}}
     <div class="py-16 md:py-24">
         <section id="ulasan" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-            <div class="rounded-[2.5rem] border border-[#edd8cf]/60 bg-[#fbf1e8]/80 p-8 sm:p-12 shadow-[0_15px_40px_rgba(33,20,11,0.04)]">
+            <div class="rounded-2xl sm:rounded-[2.5rem] border border-[#edd8cf]/60 bg-[#fbf1e8]/80 p-5 sm:p-8 lg:p-12 shadow-[0_15px_40px_rgba(33,20,11,0.04)]">
                 <!-- Header Section: Title Left, Rating Summary Right -->
                 <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
                     <!-- Left Heading -->
@@ -187,7 +187,7 @@
                     {{-- Reviews Grid --}}
                     <div id="ulasan-grid" class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
                         @foreach($ulasanList as $index => $ulasan)
-                            <div class="ulasan-card flex flex-col rounded-2xl border border-[#edd8cf]/60 bg-white p-6 shadow-[0_6px_22px_rgba(33,20,11,0.03)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(33,20,11,0.08)]" @if($index >= 8) style="display: none;" @endif>
+                            <div class="ulasan-card flex flex-col rounded-2xl border border-[#edd8cf]/60 bg-white p-4 sm:p-6 shadow-[0_6px_22px_rgba(33,20,11,0.03)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(33,20,11,0.08)]" @if($index >= 8) style="display: none;" @endif>
                                 <!-- User Header -->
                                 <div class="flex items-center gap-3.5">
                                     <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#f4e6da] text-sm font-bold text-[#21140b] shadow-sm">

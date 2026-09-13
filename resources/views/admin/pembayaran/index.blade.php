@@ -447,7 +447,7 @@
 </div>
 
 {{-- MODAL DETAIL & VERIFIKASI PEMBAYARAN --}}
-<div id="modal-verifikasi-pembayaran" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true">
+<div id="modal-verifikasi-pembayaran" class="fixed inset-0 z-50 flex items-center justify-center p-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] hidden" role="dialog" aria-modal="true">
     {{-- Backdrop --}}
     <div class="absolute inset-0 bg-black/45 backdrop-blur-sm transition-opacity" onclick="closeVerifikasiModal()"></div>
 
@@ -510,7 +510,7 @@
 </div>
 
 {{-- MODAL KONFIRMASI TOLAK --}}
-<div id="modal-konfirmasi-tolak" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true">
+<div id="modal-konfirmasi-tolak" class="fixed inset-0 z-50 flex items-center justify-center p-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] hidden" role="dialog" aria-modal="true">
     {{-- Backdrop --}}
     <div class="absolute inset-0 bg-black/45 backdrop-blur-sm transition-opacity" onclick="closeTolakModal()"></div>
 

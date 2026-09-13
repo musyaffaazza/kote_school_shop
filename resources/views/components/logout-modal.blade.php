@@ -1,5 +1,5 @@
 {{-- Logout Confirmation Modal --}}
-<div id="logout-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="logout-modal-title">
+<div id="logout-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]" role="dialog" aria-modal="true" aria-labelledby="logout-modal-title">
     {{-- Backdrop --}}
     <div id="logout-modal-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-200" onclick="closeLogoutModal()"></div>
 

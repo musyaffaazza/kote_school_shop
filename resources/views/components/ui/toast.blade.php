@@ -12,11 +12,12 @@
         left: 0 !important;
         width: 100vw !important;
         height: 100vh !important;
+        height: 100dvh !important;
         z-index: 9999999 !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        padding: 1rem !important;
+        padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)) !important;
         box-sizing: border-box !important;
         background-color: rgba(33, 20, 11, 0.45) !important;
         backdrop-filter: blur(5px) !important;

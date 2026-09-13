@@ -1,4 +1,4 @@
-<div id="splash-screen" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#f8f3ed] px-4 transition-opacity duration-700 ease-in-out select-none">
+<div id="splash-screen" class="fixed inset-0 min-h-[100dvh] z-[9999] flex flex-col items-center justify-center bg-[#f8f3ed] px-4 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] transition-opacity duration-700 ease-in-out select-none">
     <div class="flex flex-col items-center text-center space-y-4 max-w-sm w-full animate-fade-in">
         <!-- Logo KOTE Coffee Stylized -->
         <div class="relative flex flex-col items-center justify-center mb-1">

@@ -2,7 +2,7 @@
 <html lang="id">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
         <title>{{ config('app.name', 'KOTE SCHOOL SHOP') }} - Staff Portal</title>
         <meta name="description" content="KOTE SCHOOL SHOP Staff Portal - Dashboard Karyawan" />
         <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -124,7 +124,7 @@
         {{-- ============================================ --}}
         {{-- MODAL: PROFILE CARD & EDIT PROFIL            --}}
         {{-- ============================================ --}}
-        <div id="modal-profile" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="modal-profile-title">
+        <div id="modal-profile" class="fixed inset-0 z-50 flex items-center justify-center p-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] hidden" role="dialog" aria-modal="true" aria-labelledby="modal-profile-title">
             {{-- Backdrop --}}
             <div class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 opacity-0" data-modal-backdrop onclick="closeModal('modal-profile')"></div>
 

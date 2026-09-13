@@ -56,7 +56,7 @@
             </div>
 
             {{-- Cards Container --}}
-            <div class="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
+            <div class="space-y-4 max-h-[70dvh] overflow-y-auto pr-1">
                 @forelse($diproses as $pesanan)
                     <div class="bg-white border border-[#ede6df] shadow-[0_2px_8px_rgba(33,20,11,0.02)] rounded-2xl p-5 hover:shadow-md transition-all space-y-4">
                         {{-- Card Header --}}
@@ -172,7 +172,7 @@
             </div>
 
             {{-- Cards Container --}}
-            <div class="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
+            <div class="space-y-4 max-h-[70dvh] overflow-y-auto pr-1">
                 @forelse($sedangDibuat as $pesanan)
                     <div class="bg-white border border-[#ede6df] shadow-[0_2px_8px_rgba(33,20,11,0.02)] rounded-2xl p-5 hover:shadow-md transition-all space-y-4">
                         {{-- Card Header --}}
@@ -285,7 +285,7 @@
             </div>
 
             {{-- Cards Container --}}
-            <div class="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
+            <div class="space-y-4 max-h-[70dvh] overflow-y-auto pr-1">
                 @forelse($siapDiambil as $pesanan)
                     <div class="bg-white border border-[#ede6df] shadow-[0_2px_8px_rgba(33,20,11,0.02)] rounded-2xl p-5 hover:shadow-md transition-all space-y-4">
                         {{-- Card Header --}}

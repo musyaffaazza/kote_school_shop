@@ -49,7 +49,7 @@
             {{-- LEFT COLUMN: ORDER SUMMARY (Span 5) --}}
             <div class="lg:col-span-5 space-y-6">
                 <!-- Order Summary Card -->
-                <div class="rounded-3xl bg-white border border-[#edd8cf]/60 p-6 shadow-[0_10px_30px_rgba(33,20,11,0.02)] space-y-6">
+                <div class="rounded-2xl sm:rounded-3xl bg-white border border-[#edd8cf]/60 p-4 sm:p-6 shadow-[0_10px_30px_rgba(33,20,11,0.02)] space-y-6">
                     <h2 class="text-base font-extrabold text-[#21140b] text-left">Ringkasan Pesanan</h2>
 
                     <!-- Items List -->
@@ -142,7 +142,7 @@
             @if($isTunai)
                 {{-- RIGHT COLUMN: CASH PAYMENT VERSION (Span 7) --}}
                 <div class="lg:col-span-7">
-                    <div class="rounded-3xl bg-white border border-[#edd8cf]/60 p-8 sm:p-12 shadow-[0_10px_30px_rgba(33,20,11,0.02)] text-center flex flex-col items-center justify-center space-y-7 min-h-[440px]">
+                    <div class="rounded-2xl sm:rounded-3xl bg-white border border-[#edd8cf]/60 p-5 sm:p-8 lg:p-12 shadow-[0_10px_30px_rgba(33,20,11,0.02)] text-center flex flex-col items-center justify-center space-y-7 min-h-[440px]">
                         
                         {{-- STATUS BADGE --}}
                         <div class="flex items-center justify-center gap-2">
@@ -169,9 +169,9 @@
                         </div>
 
                         {{-- ORDER NUMBER --}}
-                        <div class="space-y-1.5">
+                        <div class="space-y-1.5 w-full">
                             <p class="text-[11px] font-extrabold text-[#8f7664] tracking-[0.18em] uppercase">NOMOR PESANAN</p>
-                            <p id="cash-order-number" class="text-3xl sm:text-4xl md:text-5xl font-black text-[#21140b] tracking-wider">
+                            <p id="cash-order-number" class="text-2xl sm:text-4xl md:text-5xl font-black text-[#21140b] tracking-wider break-all sm:break-normal">
                                 {{ $hasOrder ? $pesanan->order_number : '#ORD-20240520-001' }}
                             </p>
                         </div>
@@ -193,7 +193,7 @@
             @else
                 {{-- RIGHT COLUMN: QRIS OR BANK TRANSFER (Span 7) --}}
                 <div class="lg:col-span-7">
-                    <div class="rounded-3xl bg-white border border-[#edd8cf]/60 p-6 sm:p-8 shadow-[0_10px_30px_rgba(33,20,11,0.02)] text-center space-y-6">
+                    <div class="rounded-2xl sm:rounded-3xl bg-white border border-[#edd8cf]/60 p-4 sm:p-6 lg:p-8 shadow-[0_10px_30px_rgba(33,20,11,0.02)] text-center space-y-6">
                         
                         {{-- DYNAMIC STATUS BADGE --}}
                         <div class="flex items-center justify-center gap-2">

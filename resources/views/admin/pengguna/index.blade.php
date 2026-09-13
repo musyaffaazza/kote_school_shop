@@ -277,7 +277,7 @@
 {{-- ======================================================== --}}
 {{-- MODAL 1: LIHAT FOTO IDENTITAS (KTP / KARTU PELAJAR)     --}}
 {{-- ======================================================== --}}
-<div id="modal-foto-identitas" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 hidden" role="dialog" aria-modal="true">
+<div id="modal-foto-identitas" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] hidden" role="dialog" aria-modal="true">
     {{-- Backdrop --}}
     <div class="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity" onclick="closeModal('modal-foto-identitas')"></div>
 
@@ -344,7 +344,7 @@
 {{-- ======================================================== --}}
 {{-- MODAL 2: TAMBAH PENGGUNA BARU                           --}}
 {{-- ======================================================== --}}
-<div id="modal-tambah-pengguna" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 hidden" role="dialog" aria-modal="true">
+<div id="modal-tambah-pengguna" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] hidden" role="dialog" aria-modal="true">
     {{-- Backdrop --}}
     <div class="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity" onclick="closeModal('modal-tambah-pengguna')"></div>
 
@@ -444,7 +444,7 @@
 {{-- ======================================================== --}}
 {{-- MODAL 3: EDIT DATA PENGGUNA                             --}}
 {{-- ======================================================== --}}
-<div id="modal-edit-pengguna" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 hidden" role="dialog" aria-modal="true">
+<div id="modal-edit-pengguna" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] hidden" role="dialog" aria-modal="true">
     {{-- Backdrop --}}
     <div class="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity" onclick="closeModal('modal-edit-pengguna')"></div>
 
@@ -545,7 +545,7 @@
 {{-- ======================================================== --}}
 {{-- MODAL 4: KONFIRMASI HAPUS PENGGUNA                      --}}
 {{-- ======================================================== --}}
-<div id="modal-delete-user" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 hidden" role="dialog" aria-modal="true">
+<div id="modal-delete-user" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] hidden" role="dialog" aria-modal="true">
     {{-- Backdrop --}}
     <div class="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity" onclick="closeModal('modal-delete-user')"></div>
 

@@ -1,9 +1,9 @@
 @extends('layouts.guest')
 
 @section('content')
-    <div class="flex min-h-[calc(100vh-12rem)] items-center justify-center bg-[#fbf1e8] px-4 py-8 sm:px-6 lg:px-8">
+    <div class="flex min-h-[calc(100dvh-12rem)] items-center justify-center bg-[#fbf1e8] px-4 py-8 sm:px-6 lg:px-8">
         <div class="w-full max-w-[460px] sm:max-w-[500px] md:max-w-4xl transition-all duration-300">
-            <div class="mx-auto w-full rounded-[2rem] border border-[#edd8cf]/60 bg-white p-6 sm:p-10 shadow-[0_20px_50px_rgba(33,20,11,0.06)]">
+            <div class="mx-auto w-full rounded-2xl sm:rounded-[2rem] border border-[#edd8cf]/60 bg-white p-5 sm:p-10 shadow-[0_20px_50px_rgba(33,20,11,0.06)]">
                 <!-- Header -->
                 <div class="flex flex-col items-center space-y-2 text-center">
                     <div class="flex items-center gap-2">
@@ -103,7 +103,7 @@
                                 <label for="alamat" class="mb-2 block text-xs font-bold uppercase tracking-wider text-[#21140b]">ALAMAT</label>
                                 <textarea id="alamat" name="alamat" rows="2"
                                     placeholder="Masukkan alamat lengkap Anda"
-                                    class="w-full rounded-xl border border-[#e7d7ce] bg-[#fbf1e8] px-4 py-3 text-sm text-[#21140b] placeholder:text-[#b79f8d] shadow-sm transition focus:border-[#c5ab98] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#c5ab98]/20">{{ old('alamat') }}</textarea>
+                                    class="w-full rounded-xl border border-[#e7d7ce] bg-[#fbf1e8] px-4 py-3 text-base lg:text-sm text-[#21140b] placeholder:text-[#b79f8d] shadow-sm transition focus:border-[#c5ab98] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#c5ab98]/20">{{ old('alamat') }}</textarea>
                                 @error('alamat')
                                     <p class="mt-1.5 text-sm text-red-600">{{ $message }}</p>
                                 @enderror

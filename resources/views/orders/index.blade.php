@@ -41,7 +41,7 @@
                 $isPendingPayment = $pembayaran && $pembayaran->status === 'menunggu';
                 $hasUploadedBukti = $pembayaran && $pembayaran->bukti_transfer;
             @endphp
-            <div class="rounded-2xl bg-white border border-[#ede6df]/60 shadow-sm px-5 py-5 sm:px-6 sm:py-5">
+            <div class="rounded-2xl bg-white border border-[#ede6df]/60 shadow-sm px-4 py-4 sm:px-6 sm:py-5">
                 <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                     {{-- Left Side: Menu Photo + Order Info --}}
                     <div class="flex items-start gap-4">
@@ -103,7 +103,7 @@
                                 @if($pembayaran)
                                     @if($pembayaran->status === 'menunggu')
                                         <span class="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-0.5 text-[10px] font-bold text-amber-700">
-                                            <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                            <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0 1 18 0z" /></svg>
                                             Menunggu Verifikasi
                                         </span>
                                     @elseif($pembayaran->status === 'berhasil')
@@ -129,11 +129,13 @@
                     </div>
 
                     {{-- Right Side: Total + Actions --}}
-                    <div class="flex flex-col items-end gap-1.5 shrink-0">
-                        <span class="text-[11px] font-semibold text-[#8f7664]">Total Pesanan</span>
-                        <span class="text-lg font-extrabold text-[#8b5a2b]">Rp {{ number_format($order->total_harga, 0, ',', '.') }}</span>
+                    <div class="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-1.5 shrink-0 pt-3 sm:pt-0 border-t border-[#ede6df]/40 sm:border-none">
+                        <div class="text-left sm:text-right">
+                            <span class="block text-[10px] sm:text-[11px] font-semibold text-[#8f7664]">Total Pesanan</span>
+                            <span class="text-base sm:text-lg font-extrabold text-[#8b5a2b]">Rp {{ number_format($order->total_harga, 0, ',', '.') }}</span>
+                        </div>
 
-                        <div class="flex items-center gap-2 mt-1">
+                        <div class="flex items-center gap-2 sm:mt-1">
                             @if($order->status_pesanan === 'selesai')
                                 @if(in_array($order->id_pesanan, $sudahDiulasOrderIds ?? []))
                                     <span class="inline-flex items-center justify-center rounded-full bg-[#e6f4ea] text-[#137333] px-3 py-1.5 text-[11px] font-bold">
@@ -185,7 +187,7 @@
 </div>
 
 {{-- Delete Confirmation Modal --}}
-<div id="delete-order-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true">
+<div id="delete-order-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] hidden" role="dialog" aria-modal="true">
     {{-- Backdrop with blur --}}
     <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onclick="closeDeleteOrderModal()"></div>
 
